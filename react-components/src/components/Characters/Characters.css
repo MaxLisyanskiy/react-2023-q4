@@ -1,0 +1,43 @@
+.characters {
+  height: 100%;
+}
+
+.characters__section {
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 50px 0px;
+  background: rgb(32, 35, 41);
+  border-radius: 50px 50px 0 0;
+}
+
+.characters__loading {
+  font-size: 24px;
+  color: white;
+}
+
+.list {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 1920px;
+}
+
+li {
+  width: 600px;
+  height: 220px;
+  display: flex;
+  overflow: hidden;
+  background: rgb(60, 62, 68);
+  border-radius: 16px;
+  margin: 6px;
+  color: white;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
