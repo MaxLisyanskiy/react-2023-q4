@@ -1,24 +1,16 @@
 import { ChangeEvent, Component } from 'react';
+import { ISearchProps, ISearchState } from '../../types/search';
 
-type Props = {
-  searchValue: string;
-  getData: (value: string) => void;
-};
-
-type State = {
-  value: string;
-};
-
-class Search extends Component<Props, State> {
-  state: State = {
+class Search extends Component<ISearchProps, ISearchState> {
+  state: ISearchState = {
     value: '',
   };
 
-  constructor(props: Props) {
+  constructor(props: ISearchProps) {
     super(props);
 
     this.state = {
-      value: '',
+      value: props.searchValue,
     };
   }
 
