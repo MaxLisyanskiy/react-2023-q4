@@ -1,5 +1,7 @@
 import { ChangeEvent, Component } from 'react';
 import { ISearchProps, ISearchState } from '../../types/search';
+import logoIMG from '../../assets/logo.webp';
+import './Search.css';
 
 class Search extends Component<ISearchProps, ISearchState> {
   state: ISearchState = {
@@ -24,10 +26,19 @@ class Search extends Component<ISearchProps, ISearchState> {
 
   render() {
     return (
-      <div>
-        <input type="text" placeholder="Search..." value={this.state.value} onChange={this.handleChange} />
-        <button onClick={this.handleSeacrh}>Search 🔍</button>
-      </div>
+      <header className="search">
+        <img className="search__logo" src={logoIMG} alt="logo" />
+        <div>
+          <input
+            className="search__input"
+            type="text"
+            placeholder="Search..."
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
+          <button onClick={this.handleSeacrh}>Search 🔍</button>
+        </div>
+      </header>
     );
   }
 }

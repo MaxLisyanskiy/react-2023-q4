@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { ICharacterProps, ICharacterResponse, ICharacterState } from '../../types/characters';
+import notFoundIMG from '../../assets/not-found.webp';
 import './Characters.css';
 
 const API_URL: string = 'https://rickandmortyapi.com/api/character';
@@ -47,7 +48,7 @@ class Characters extends Component<ICharacterProps, ICharacterState> {
   render() {
     return (
       <main className="characters">
-        <h1>The Rick and Morty Characters</h1>
+        <h1 className="characters__title">The Rick and Morty Characters</h1>
 
         <section className="characters__section">
           {this.state.loading ? (
@@ -81,7 +82,10 @@ class Characters extends Component<ICharacterProps, ICharacterState> {
                   })}
                 </ul>
               ) : (
-                <p>Opps...</p>
+                <div className="characters__not-found">
+                  <p>Opps... not found</p>
+                  <img src={notFoundIMG} alt="notFoundIMG" />
+                </div>
               )}
             </>
           )}

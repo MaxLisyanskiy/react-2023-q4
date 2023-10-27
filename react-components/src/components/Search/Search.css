@@ -1,0 +1,17 @@
+.search {
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search__logo {
+  max-width: 50px;
+}
+
+.search__input {
+  padding: 10px;
+  border-radius: 8px;
+  margin-right: 8px;
+  border: 1.5px solid rgb(32, 35, 41);
+}
