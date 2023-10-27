@@ -1,0 +1,25 @@
+.error {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: black;
+}
+
+.error__title {
+  font-size: calc(26px + 6 * ((100vw - 320px) / 680));
+  color: white;
+}
+
+.error__img {
+  height: auto;
+}
+
+.error__reload-btn {
+  margin-top: 30px;
+}
+
+.error_btn {
+  background-color: #f9bfbf;
+}

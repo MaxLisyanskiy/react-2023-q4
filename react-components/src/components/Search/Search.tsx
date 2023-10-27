@@ -1,6 +1,7 @@
 import { ChangeEvent, Component } from 'react';
 import { ISearchProps, ISearchState } from '../../types/search';
 import logoIMG from '../../assets/logo.webp';
+import ErrorBtn from '../Error/ErrorBtn';
 import './Search.css';
 
 class Search extends Component<ISearchProps, ISearchState> {
@@ -38,6 +39,7 @@ class Search extends Component<ISearchProps, ISearchState> {
           />
           <button onClick={this.handleSeacrh}>Search 🔍</button>
         </div>
+        <ErrorBtn />
       </header>
     );
   }
