@@ -1,5 +1,5 @@
 {
-  "name": "react-components",
+  "name": "react-2023-q4",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,7 +8,8 @@
     "build": "tsc && vite build",
     "lint": "eslint .",
     "format:fix": "prettier . --write",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "deploy": "npm run build && npx gh-pages -d dist -e module01"
   },
   "dependencies": {
     "react": "^18.2.0",
