@@ -9,6 +9,10 @@
   max-width: 50px;
 }
 
+.search__wrapp {
+  display: flex;
+}
+
 .search__input {
   padding: 10px;
   border-radius: 8px;

@@ -59,20 +59,20 @@ class Characters extends Component<ICharacterProps, ICharacterState> {
                 <ul className="list">
                   {this.state.characters.map((item) => {
                     return (
-                      <li key={item.id}>
+                      <li className="item" key={item.id}>
                         <div>
                           <img src={item.image} alt={item.name} />
                         </div>
-                        <div>
-                          <h2>{item.name}</h2>
-                          <h4>
+                        <div className="item__wrapp">
+                          <h2 className="item__title">{item.name}</h2>
+                          <h4 className="item__subtitle">
                             {item.species} - {item.gender}
                           </h4>
-                          <div>
+                          <div className="item__additional">
                             <span>Last known location:</span>
                             <p>{item.location.name}</p>
                           </div>
-                          <div>
+                          <div className="item__additional">
                             <span>First seen in:</span>
                             <p>{item.origin.name}</p>
                           </div>

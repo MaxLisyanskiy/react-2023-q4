@@ -29,7 +29,7 @@ class Search extends Component<ISearchProps, ISearchState> {
     return (
       <header className="search">
         <img className="search__logo" src={logoIMG} alt="logo" />
-        <div>
+        <div className="search__wrapp">
           <input
             className="search__input"
             type="text"

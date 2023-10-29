@@ -9,7 +9,7 @@ class ErrorBtn extends Component<IErrorBtnProps, IErrorBtnState> {
 
   public componentDidUpdate(_: IErrorBtnProps, prevState: IErrorBtnState): void {
     if (this.state.error !== prevState.error) {
-      throw new Error('Пример ошибки');
+      throw new Error('Throw an Error example!');
     }
   }
 

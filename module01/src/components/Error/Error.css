@@ -8,12 +8,14 @@
 }
 
 .error__title {
+  margin-bottom: 20px;
   font-size: calc(26px + 6 * ((100vw - 320px) / 680));
   color: white;
 }
 
 .error__img {
-  height: auto;
+  max-height: 500px;
+  width: auto;
 }
 
 .error__reload-btn {
