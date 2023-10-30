@@ -8,7 +8,6 @@
     "build": "tsc && vite build",
     "lint": "eslint .",
     "format:fix": "prettier . --write",
-    "prepare": "husky install",
     "deploy": "npm run build && npx gh-pages -d dist -e react-basic"
   },
   "dependencies": {
