@@ -1,1 +1,1 @@
-{ "*.(ts|tsx|js|jsx)": ["npm run lint", "npm run format:fix"] }
+{ "*.(js,jsx,ts,tsx)": ["npm run lint", "npm run format:fix"] }
