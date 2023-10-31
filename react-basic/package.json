@@ -6,7 +6,9 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint .",
+    "lint": "eslint . --ext ts,tsx",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
+    "format": "prettier . --check",
     "format:fix": "prettier . --write",
     "deploy": "npm run build && npx gh-pages -d dist -e react-basic",
     "prepare": "cd .. && husky install react-basic/.husky"

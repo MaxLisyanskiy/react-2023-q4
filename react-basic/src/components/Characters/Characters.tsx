@@ -1,98 +1,84 @@
-import { Component } from 'react';
-import { ICharacterProps, ICharacterResponse, ICharacterState } from '../../types/characters';
+import { useEffect, useState } from 'react';
+import { ICharacter, ICharacterResponse } from '../../types/characters';
 import notFoundIMG from '../../assets/not-found.webp';
 import './Characters.css';
 
 const API_URL: string = 'https://rickandmortyapi.com/api/character';
 
-class Characters extends Component<ICharacterProps, ICharacterState> {
-  state: ICharacterState = {
-    characters: [],
-    loading: false,
-  };
+const Characters = ({ searchValue }: { searchValue: string }) => {
+  const [characters, setCharacters] = useState<ICharacter[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  constructor(props: ICharacterProps) {
-    super(props);
-  }
+  useEffect(() => {
+    getFetchCharacters(searchValue);
+  }, [searchValue]);
 
-  componentDidUpdate(prevProps: ICharacterProps): void {
-    if (this.props.searchValue !== prevProps.searchValue) {
-      this.getData(this.props.searchValue);
-    }
-  }
-
-  componentDidMount(): void {
-    this.getData(this.props.searchValue);
-  }
-
-  getData = async (searchValue: string): Promise<void> => {
-    this.setState({ loading: true });
+  const getFetchCharacters = async (value: string): Promise<void> => {
+    setLoading(true);
 
     try {
-      const response: Response = await fetch(searchValue.trim() !== '' ? `${API_URL}?name=${searchValue}` : API_URL);
+      const response: Response = await fetch(value.trim() !== '' ? `${API_URL}?name=${value}` : API_URL);
 
       if (response.status === 200) {
         const data: ICharacterResponse = await response.json();
-        this.setState({ characters: data.results });
+        setCharacters(data.results);
       } else {
-        this.setState({ characters: [] });
+        setCharacters([]);
       }
     } catch (error) {
-      this.setState({ characters: [] });
+      setCharacters([]);
       console.error('Error:', error);
     } finally {
-      this.setState({ loading: false });
+      setLoading(false);
     }
   };
 
-  render() {
-    return (
-      <main className="characters">
-        <h1 className="characters__title">The Rick and Morty Characters</h1>
+  return (
+    <main className="characters">
+      <h1 className="characters__title">The Rick and Morty Characters</h1>
 
-        <section className="characters__section">
-          {this.state.loading ? (
-            <div className="characters__loading">Loading...</div>
-          ) : (
-            <>
-              {this.state.characters.length > 0 ? (
-                <ul className="list">
-                  {this.state.characters.map((item) => {
-                    return (
-                      <li className="item" key={item.id}>
-                        <div>
-                          <img src={item.image} alt={item.name} />
+      <section className="characters__section">
+        {loading ? (
+          <div className="characters__loading">Loading...</div>
+        ) : (
+          <>
+            {characters.length > 0 ? (
+              <ul className="list">
+                {characters.map((item) => {
+                  return (
+                    <li className="item" key={item.id}>
+                      <div>
+                        <img src={item.image} alt={item.name} />
+                      </div>
+                      <div className="item__wrapp">
+                        <h2 className="item__title">{item.name}</h2>
+                        <h4 className="item__subtitle">
+                          {item.species} - {item.gender}
+                        </h4>
+                        <div className="item__additional">
+                          <span>Last known location:</span>
+                          <p>{item.location.name}</p>
                         </div>
-                        <div className="item__wrapp">
-                          <h2 className="item__title">{item.name}</h2>
-                          <h4 className="item__subtitle">
-                            {item.species} - {item.gender}
-                          </h4>
-                          <div className="item__additional">
-                            <span>Last known location:</span>
-                            <p>{item.location.name}</p>
-                          </div>
-                          <div className="item__additional">
-                            <span>First seen in:</span>
-                            <p>{item.origin.name}</p>
-                          </div>
+                        <div className="item__additional">
+                          <span>First seen in:</span>
+                          <p>{item.origin.name}</p>
                         </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              ) : (
-                <div className="characters__not-found">
-                  <p>Opps... not found</p>
-                  <img src={notFoundIMG} alt="notFoundIMG" />
-                </div>
-              )}
-            </>
-          )}
-        </section>
-      </main>
-    );
-  }
-}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <div className="characters__not-found">
+                <p>Opps... not found</p>
+                <img src={notFoundIMG} alt="notFoundIMG" />
+              </div>
+            )}
+          </>
+        )}
+      </section>
+    </main>
+  );
+};
 
 export default Characters;

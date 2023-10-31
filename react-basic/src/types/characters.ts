@@ -28,13 +28,3 @@ export interface ICharacterResponse {
   };
   results: ICharacter[];
 }
-
-export type ICharacterProps = {
-  searchValue: string;
-  getData: (value: string) => void;
-};
-
-export type ICharacterState = {
-  characters: ICharacter[];
-  loading: boolean;
-};

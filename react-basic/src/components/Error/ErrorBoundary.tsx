@@ -1,7 +1,14 @@
-import { Component, ErrorInfo } from 'react';
-import { IErrorBoundaryProps, IErrorBoundaryState } from '../../types/error';
+import { Component, ErrorInfo, ReactNode } from 'react';
 import errorIMG from '../../assets/error.jpg';
 import './Error.css';
+
+type IErrorBoundaryProps = {
+  children?: ReactNode;
+};
+
+type IErrorBoundaryState = {
+  hasError: boolean;
+};
 
 class ErrorBoundary extends Component<IErrorBoundaryProps, IErrorBoundaryState> {
   public state: IErrorBoundaryState = {

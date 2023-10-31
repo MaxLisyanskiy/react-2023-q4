@@ -1,44 +1,29 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import Search from './Search/Search';
 import Characters from './Characters/Characters';
 
-type AppProps = {
-  children?: JSX.Element;
-};
+const App = () => {
+  const [search, setSearch] = useState<string>('');
 
-type AppState = {
-  search: string;
-};
-
-class App extends Component<AppProps, AppState> {
-  state: AppState = {
-    search: '',
-  };
-
-  constructor(props: AppProps) {
-    super(props);
-
+  useEffect(() => {
     const ls: string | null = localStorage.getItem('rss_project_01_search');
-    this.state = {
-      search: ls || '',
-    };
-  }
 
-  getData = (value: string): void => {
-    if (value !== this.state.search) {
-      this.setState({ search: value });
+    if (ls) setSearch(ls);
+  }, []);
+
+  const getData = (value: string) => {
+    if (value !== search) {
+      setSearch(value);
       localStorage.setItem('rss_project_01_search', value);
     }
   };
 
-  render() {
-    return (
-      <>
-        <Search searchValue={this.state.search} getData={this.getData} />
-        <Characters searchValue={this.state.search} getData={this.getData} />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Search searchValue={search} getData={getData} />
+      <Characters searchValue={search} />
+    </>
+  );
+};
 
 export default App;
