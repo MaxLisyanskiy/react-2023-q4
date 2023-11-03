@@ -1,22 +1,22 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import logoIMG from '../../assets/logo.webp';
+import { useNavigate } from 'react-router-dom';
+import { PROJECT_PATH } from '../../constants';
 import ErrorBtn from '../Error/ErrorBtn';
+import logoIMG from '../../assets/logo.webp';
 import './Search.css';
 
-export type ISearchProps = {
-  searchValue: string;
-  getData: (value: string) => void;
-};
-
-const Search = ({ searchValue, getData }: ISearchProps) => {
+const Search = () => {
   const [value, setValue] = useState<string>('');
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (searchValue) setValue(searchValue);
-  }, [searchValue]);
+    const ls: string | null = localStorage.getItem('rss_project_01_search');
+
+    if (ls) setValue(ls);
+  }, []);
 
   const handleSeacrh = () => {
-    getData(value);
+    navigate(`${PROJECT_PATH}/${value}`);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -2,16 +2,22 @@ import { useEffect, useState } from 'react';
 import { ICharacter, ICharacterResponse } from '../../types/characters';
 import notFoundIMG from '../../assets/not-found.webp';
 import './Characters.css';
+import { useParams } from 'react-router-dom';
 
 const API_URL: string = 'https://rickandmortyapi.com/api/character';
 
-const Characters = ({ searchValue }: { searchValue: string }) => {
+// { searchValue }: { searchValue: string }
+
+const Characters = () => {
+  const { search } = useParams();
+
   const [characters, setCharacters] = useState<ICharacter[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    getFetchCharacters(searchValue);
-  }, [searchValue]);
+    getFetchCharacters(search ?? '');
+    localStorage.setItem('rss_project_01_search', search ?? '');
+  }, [search]);
 
   const getFetchCharacters = async (value: string): Promise<void> => {
     setLoading(true);
