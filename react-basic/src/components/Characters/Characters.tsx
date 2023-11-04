@@ -1,33 +1,59 @@
 import { useEffect, useState } from 'react';
-import { ICharacter, ICharacterResponse } from '../../types/characters';
+import { ICharacter } from '../../types/characters';
 import notFoundIMG from '../../assets/not-found.webp';
-import './Characters.css';
-import { useParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
-const API_URL: string = 'https://rickandmortyapi.com/api/character';
+import './Characters.css';
+import Pagination from '../Pagination/Pagination';
+
+// const API_URL: string = 'https://rickandmortyapi.com/api/character';
+// const API_URL: string = 'https://api.slingacademy.com/v1/sample-data/users';
+const API_URL: string = 'https://hn.algolia.com/api/v1/search';
 
 // { searchValue }: { searchValue: string }
 
 const Characters = () => {
-  const { search } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [characters, setCharacters] = useState<ICharacter[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    getFetchCharacters(search ?? '');
-    localStorage.setItem('rss_project_01_search', search ?? '');
-  }, [search]);
+  const [currentPage, setCurrentPage] = useState<string>('1');
 
-  const getFetchCharacters = async (value: string): Promise<void> => {
+  useEffect(() => {
+    const search = searchParams.get('search') || '';
+    const page = searchParams.get('page') || '1';
+    const limit = searchParams.get('limit') || '10';
+
+    if (search) {
+      setSearchParams({ search, page, limit });
+    } else {
+      setSearchParams({ page, limit });
+    }
+
+    setCurrentPage(page);
+    // setSearchParams({ page: '1', limit: '20' });
+    // getFetchCharacters(search ?? '');
+    getFetchCharacters(search, page, limit);
+    // localStorage.setItem('rss_project_01_search', search ?? '');
+    localStorage.setItem('rss_project_01_search', '');
+  }, [searchParams]);
+
+  const getFetchCharacters = async (search: string, page: string, limit: string): Promise<void> => {
     setLoading(true);
 
     try {
-      const response: Response = await fetch(value.trim() !== '' ? `${API_URL}?name=${value}` : API_URL);
+      const response: Response = await fetch(
+        search.trim() !== ''
+          ? `${API_URL}?query=${search}&page=${page}&hitsPerPage=${limit}`
+          : `${API_URL}?page=${page}&hitsPerPage=${limit}`,
+      );
 
       if (response.status === 200) {
-        const data: ICharacterResponse = await response.json();
-        setCharacters(data.results);
+        // const data: ICharacterResponse = await response.json();
+        const data = await response.json();
+        console.log(data.hits);
+        setCharacters(data.hits);
       } else {
         setCharacters([]);
       }
@@ -39,9 +65,13 @@ const Characters = () => {
     }
   };
 
+  // const handleChangeUsersLimit = () => {
+
+  // }
+
   return (
     <main className="characters">
-      <h1 className="characters__title">The Rick and Morty Characters</h1>
+      <h1 className="characters__title">The random users list</h1>
 
       <section className="characters__section">
         {loading ? (
@@ -54,20 +84,22 @@ const Characters = () => {
                   return (
                     <li className="item" key={item.id}>
                       <div>
-                        <img src={item.image} alt={item.name} />
+                        <img src={item.profile_picture} alt={item.first_name} />
                       </div>
                       <div className="item__wrapp">
-                        <h2 className="item__title">{item.name}</h2>
+                        <h2 className="item__title">
+                          {item.first_name} {item.last_name}
+                        </h2>
                         <h4 className="item__subtitle">
-                          {item.species} - {item.gender}
+                          {'Country'} - {item.country}
                         </h4>
                         <div className="item__additional">
-                          <span>Last known location:</span>
-                          <p>{item.location.name}</p>
+                          <span>Gender:</span>
+                          <p>{item.gender}</p>
                         </div>
                         <div className="item__additional">
-                          <span>First seen in:</span>
-                          <p>{item.origin.name}</p>
+                          <span>Job:</span>
+                          <p>{item.job}</p>
                         </div>
                       </div>
                     </li>
@@ -82,6 +114,7 @@ const Characters = () => {
             )}
           </>
         )}
+        <Pagination page={currentPage} />
       </section>
     </main>
   );

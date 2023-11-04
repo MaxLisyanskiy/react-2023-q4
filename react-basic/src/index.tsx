@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // import App from './components/App';
 import ErrorBoundary from './components/Error/ErrorBoundary';
-import './index.css';
+import './styles/index.scss';
 
 import { RouteObject } from 'react-router-dom';
 import App from './components/App';

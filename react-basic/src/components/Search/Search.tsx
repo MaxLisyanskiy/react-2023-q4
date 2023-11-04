@@ -16,7 +16,7 @@ const Search = () => {
   }, []);
 
   const handleSeacrh = () => {
-    navigate(`${PROJECT_PATH}/${value}`);
+    navigate(`${PROJECT_PATH}?search=${value}&page=1&limit=10`);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
