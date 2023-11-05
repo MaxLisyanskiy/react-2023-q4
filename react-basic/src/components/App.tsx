@@ -7,8 +7,11 @@ const App = () => {
     <>
       <Search />
       <main style={{ display: 'flex' }}>
-        <Characters />
-        <Outlet />
+        <h1 className="characters__title">Welcome to the Pokémon Home</h1>
+        <div>
+          <Characters />
+          <Outlet />
+        </div>
       </main>
     </>
   );

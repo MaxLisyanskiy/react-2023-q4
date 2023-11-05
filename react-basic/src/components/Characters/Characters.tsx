@@ -13,46 +13,66 @@ const API_URL: string = 'https://api.pokemontcg.io/v2/cards';
 
 // { searchValue }: { searchValue: string }
 
+interface PageInfoProps {
+  search: string | null;
+  page: number;
+  pageSize: number;
+  totalCount: number;
+}
+
 const Characters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [characters, setCharacters] = useState<ICharacter[]>([]);
+  const [pageInfo, setPageInfo] = useState<PageInfoProps>({
+    search: null,
+    page: 1,
+    pageSize: 10,
+    totalCount: 100,
+  });
   const [loading, setLoading] = useState<boolean>(false);
-
-  const [currentPage, setCurrentPage] = useState<string>('1');
 
   useEffect(() => {
     const search = searchParams.get('search') || '';
     const page = searchParams.get('page') || '1';
-    const limit = searchParams.get('limit') || '10';
+    const pageSize = searchParams.get('pageSize') || '10';
 
     if (search) {
-      setSearchParams({ search, page, limit });
+      setSearchParams({ search, page, pageSize });
     } else {
-      setSearchParams({ page, limit });
+      setSearchParams({ page, pageSize });
     }
 
-    setCurrentPage(page);
+    setPageInfo({ ...pageInfo, search });
+
     // setSearchParams({ page: '1', limit: '20' });
     // getFetchCharacters(search ?? '');
-    getFetchCharacters(search, page, limit);
+    getFetchCharacters(search, page, pageSize);
     // localStorage.setItem('rss_project_01_search', search ?? '');
     localStorage.setItem('rss_project_01_search', '');
-  }, [currentPage]); // eslint-disable-line
+  }, [searchParams]);
 
-  const getFetchCharacters = async (search: string, page: string, limit: string): Promise<void> => {
+  // eslint-disable-line
+
+  const getFetchCharacters = async (
+    search: string,
+    page: string,
+    pageSize: string,
+  ): Promise<void> => {
     setLoading(true);
 
     try {
       const response: Response = await fetch(
         search.trim() !== ''
-          ? `${API_URL}?q=name=${search}&page=${page}&pageSize=${limit}`
-          : `${API_URL}?page=${page}&pageSize=${limit}`,
+          ? `${API_URL}?q=name:${search}&page=${page}&pageSize=${pageSize}`
+          : `${API_URL}?page=${page}&pageSize=${pageSize}`,
       );
 
       if (response.status === 200) {
-        const data: ICharacterResponse = await response.json();
-        setCharacters(data.data);
+        const { data, page, pageSize, totalCount }: ICharacterResponse =
+          await response.json();
+        setPageInfo({ ...pageInfo, page, pageSize, totalCount });
+        setCharacters(data);
       } else {
         setCharacters([]);
       }
@@ -66,8 +86,6 @@ const Characters = () => {
 
   return (
     <section className="characters">
-      <h1 className="characters__title">The random users list</h1>
-
       <div className="characters__section">
         {loading ? (
           <div className="characters__loading">Loading...</div>
@@ -111,7 +129,12 @@ const Characters = () => {
             )}
           </>
         )}
-        <Pagination page={currentPage} />
+        <Pagination
+          page={pageInfo.page}
+          pageSize={pageInfo.pageSize}
+          totalCount={pageInfo.totalCount}
+          search={pageInfo.search}
+        />
       </div>
     </section>
   );
