@@ -6,7 +6,7 @@ const App = () => {
   return (
     <>
       <Search />
-      <main>
+      <main style={{ display: 'flex' }}>
         <Characters />
         <Outlet />
       </main>

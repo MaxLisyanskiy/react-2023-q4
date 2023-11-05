@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
-import { ICharacter } from '../../types/characters';
+import { ICharacter, ICharacterResponse } from '../../types/characters';
 import notFoundIMG from '../../assets/not-found.webp';
 import { useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './Characters.css';
 import Pagination from '../Pagination/Pagination';
 
 // const API_URL: string = 'https://rickandmortyapi.com/api/character';
 // const API_URL: string = 'https://api.slingacademy.com/v1/sample-data/users';
-const API_URL: string = 'https://hn.algolia.com/api/v1/search';
+const API_URL: string = 'https://api.pokemontcg.io/v2/cards';
 
 // { searchValue }: { searchValue: string }
 
@@ -37,7 +38,7 @@ const Characters = () => {
     getFetchCharacters(search, page, limit);
     // localStorage.setItem('rss_project_01_search', search ?? '');
     localStorage.setItem('rss_project_01_search', '');
-  }, [searchParams]);
+  }, [currentPage]); // eslint-disable-line
 
   const getFetchCharacters = async (search: string, page: string, limit: string): Promise<void> => {
     setLoading(true);
@@ -45,15 +46,13 @@ const Characters = () => {
     try {
       const response: Response = await fetch(
         search.trim() !== ''
-          ? `${API_URL}?query=${search}&page=${page}&hitsPerPage=${limit}`
-          : `${API_URL}?page=${page}&hitsPerPage=${limit}`,
+          ? `${API_URL}?q=name=${search}&page=${page}&pageSize=${limit}`
+          : `${API_URL}?page=${page}&pageSize=${limit}`,
       );
 
       if (response.status === 200) {
-        // const data: ICharacterResponse = await response.json();
-        const data = await response.json();
-        console.log(data.hits);
-        setCharacters(data.hits);
+        const data: ICharacterResponse = await response.json();
+        setCharacters(data.data);
       } else {
         setCharacters([]);
       }
@@ -65,15 +64,11 @@ const Characters = () => {
     }
   };
 
-  // const handleChangeUsersLimit = () => {
-
-  // }
-
   return (
-    <main className="characters">
+    <section className="characters">
       <h1 className="characters__title">The random users list</h1>
 
-      <section className="characters__section">
+      <div className="characters__section">
         {loading ? (
           <div className="characters__loading">Loading...</div>
         ) : (
@@ -83,10 +78,11 @@ const Characters = () => {
                 {characters.map((item) => {
                   return (
                     <li className="item" key={item.id}>
-                      <div>
-                        <img src={item.profile_picture} alt={item.first_name} />
-                      </div>
-                      <div className="item__wrapp">
+                      <Link to={`${item.id}`}>
+                        <div>
+                          <img src={item.images.small} alt={item.name} />
+                        </div>
+                        {/* <div className="item__wrapp">
                         <h2 className="item__title">
                           {item.first_name} {item.last_name}
                         </h2>
@@ -101,7 +97,8 @@ const Characters = () => {
                           <span>Job:</span>
                           <p>{item.job}</p>
                         </div>
-                      </div>
+                      </div> */}
+                      </Link>
                     </li>
                   );
                 })}
@@ -115,8 +112,8 @@ const Characters = () => {
           </>
         )}
         <Pagination page={currentPage} />
-      </section>
-    </main>
+      </div>
+    </section>
   );
 };
 
