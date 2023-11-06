@@ -17,6 +17,11 @@
     justify-content: center;
     background: rgb(60, 62, 68);
     border-radius: 8px;
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
   }
 
   &__select {

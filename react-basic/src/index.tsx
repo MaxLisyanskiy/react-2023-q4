@@ -1,19 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-// import App from './components/App';
-import ErrorBoundary from './components/Error/ErrorBoundary';
-import './styles/index.scss';
-
 import { RouteObject } from 'react-router-dom';
+import { PROJECT_PATH } from './utils/constants';
+
+import ErrorBoundary from './components/Error/ErrorBoundary';
 import App from './components/App';
 import About from './components/About/About';
-import { PROJECT_PATH } from './utils/constants';
+import './styles/index.scss';
 
 export const routes: RouteObject[] = [
   {
     path: PROJECT_PATH,
-    element: <App />,
+    element: (
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    ),
     children: [
       {
         path: ':id',
@@ -27,8 +30,6 @@ const router = createBrowserRouter(routes);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ErrorBoundary>
-      <RouterProvider router={router} />
-    </ErrorBoundary>
+    <RouterProvider router={router} />
   </React.StrictMode>,
 );

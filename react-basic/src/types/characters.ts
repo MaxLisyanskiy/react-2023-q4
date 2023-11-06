@@ -125,10 +125,3 @@ export interface ICharacterResponse {
   count: number;
   totalCount: number;
 }
-
-export interface PaginationProps {
-  page: number;
-  pageSize: number;
-  totalCount: number;
-  changePagination: (pageNumber: number, pageSizeValue: number) => void;
-}

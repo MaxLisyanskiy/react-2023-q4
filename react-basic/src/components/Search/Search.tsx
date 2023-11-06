@@ -1,28 +1,31 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import ErrorBtn from '../Error/ErrorBtn';
 import logoIMG from '../../assets/logo.png';
+import { SearchContext } from '../../context/search-context';
+import { SearchContextType } from '../../types/context-types';
 import './Search.scss';
 
-interface Props {
-  changeSearch: (value: string) => void;
+export interface SearchProps {
+  onChangeSearch: () => void;
 }
 
-const Search = (props: Props) => {
-  const [value, setValue] = useState<string>('');
+const Search = ({ onChangeSearch }: SearchProps) => {
+  const { search, changeSearch } = useContext(
+    SearchContext,
+  ) as SearchContextType;
 
-  useEffect(() => {
-    const ls: string | null = localStorage.getItem('rss_project_01_search');
-    if (ls) setValue(ls);
-  }, []);
+  const [value, setValue] = useState<string>(search);
 
   const handleSeacrh = () => {
-    props.changeSearch(value);
+    onChangeSearch();
+    changeSearch(value);
     localStorage.setItem('rss_project_01_search', value);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
+
   return (
     <header className="search">
       <img className="search__logo" src={logoIMG} alt="logo" />

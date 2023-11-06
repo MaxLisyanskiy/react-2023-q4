@@ -1,21 +1,64 @@
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+
 import Search from './Search/Search';
-import { Outlet } from 'react-router-dom';
-import Characters from './Characters/Characters';
-import { useState } from 'react';
+import List from './List/List';
+import SearchProvider from '../context/search-context';
+import { useEffect, useState } from 'react';
+import { generateLink } from '../utils/generate-link';
+import { PAGE, PAGE_SIZE } from '../utils/constants';
 
 const App = () => {
-  const [search, setSearch] = useState<string>('');
+  const navigate = useNavigate();
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const page = searchParams.get('page') ?? String(PAGE);
+  const pageSize = searchParams.get('pageSize') ?? String(PAGE_SIZE);
+
+  const [currentPage, setCurrentPage] = useState<number>(Number(page));
+  const [currentPageSize, setCurrentPageSize] = useState<number>(
+    Number(pageSize),
+  );
+
+  useEffect(() => {
+    setSearchParams({ page, pageSize });
+  }, []); // eslint-disable-line
+
+  const handleChangeSearch = (): void => {
+    const newUrl = generateLink(currentPage, currentPageSize);
+    navigate(newUrl);
+    setCurrentPage(PAGE);
+  };
+
+  const handleChangePage = (page: number): void => {
+    const newUrl = generateLink(page, currentPageSize);
+    navigate(newUrl);
+    setCurrentPage(page);
+  };
+
+  const handleChangePageSize = (pageSize: number): void => {
+    const newUrl = generateLink(currentPage, pageSize);
+    navigate(newUrl);
+    setCurrentPageSize(pageSize);
+    setCurrentPage(PAGE);
+  };
+
   return (
-    <>
-      <Search changeSearch={(value: string) => setSearch(value)} />
+    <SearchProvider>
+      <Search onChangeSearch={handleChangeSearch} />
       <main className="main">
         <h1 className="main-title">Welcome to the Pokémon Home</h1>
         <div className="main-wrapp">
-          <Characters search={search} />
+          <List
+            currentPage={currentPage}
+            currentPageSize={currentPageSize}
+            onPageChange={handleChangePage}
+            onPageSizeChange={handleChangePageSize}
+          />
           <Outlet />
         </div>
       </main>
-    </>
+    </SearchProvider>
   );
 };
 

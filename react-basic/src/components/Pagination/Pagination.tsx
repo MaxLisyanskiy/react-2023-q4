@@ -1,22 +1,30 @@
 import { ChangeEvent } from 'react';
 import { PAGE } from '../../utils/constants';
-import { PaginationProps } from '../../types/characters';
 import './Pagination.scss';
+
+export interface PaginationProps {
+  page: number;
+  pageSize: number;
+  totalCount: number;
+  onPageChange: (pageNumber: number) => void;
+  onPageSizeChange: (pageSize: number) => void;
+}
 
 const Pagination = ({
   page,
   pageSize,
   totalCount,
-  changePagination,
+  onPageChange,
+  onPageSizeChange,
 }: PaginationProps) => {
   const totalPages = Math.ceil(+totalCount / +pageSize);
 
   const handleChangePage = (type: 'prev' | 'next') => {
-    changePagination(type === 'prev' ? page - 1 : page + 1, pageSize);
+    onPageChange(type === 'prev' ? page - 1 : page + 1);
   };
 
   const handleChangePageSize = (event: ChangeEvent<HTMLSelectElement>) => {
-    changePagination(PAGE, Number(event.target.value));
+    onPageSizeChange(Number(event.target.value));
   };
 
   return (
