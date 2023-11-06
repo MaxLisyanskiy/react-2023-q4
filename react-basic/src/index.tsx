@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-// import App from './components/App';
-import ErrorBoundary from './components/Error/ErrorBoundary';
-import './styles/index.scss';
-
 import { RouteObject } from 'react-router-dom';
+import { PROJECT_PATH } from './constants';
 import App from './components/App';
 import About from './components/About/About';
-import { PROJECT_PATH } from './constants';
+import ErrorBoundary from './components/Error/ErrorBoundary';
+import './styles/index.scss';
 
 export const routes: RouteObject[] = [
   {
