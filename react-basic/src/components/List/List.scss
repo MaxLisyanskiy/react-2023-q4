@@ -1,9 +1,13 @@
+.characters {
+  min-width: 50%;
+}
+
 .characters__section {
   min-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   background: rgb(32, 35, 41);
   border-radius: 50px 50px 0 0;
 }

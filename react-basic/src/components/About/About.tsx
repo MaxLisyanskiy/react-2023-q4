@@ -47,7 +47,11 @@ const About = () => {
   return (
     <section className="about">
       <div className="about__background" onClick={handleRouterBack}></div>
-      {isLoading && <Spinner />}
+      {isLoading && (
+        <div className="about__wrapp">
+          <Spinner />
+        </div>
+      )}
       {!isLoading && (
         <>
           {character ? (
@@ -73,7 +77,7 @@ const About = () => {
               </div>
             </div>
           ) : (
-            <div className="characters__not-found">
+            <div className="about__wrapp">
               <div className="about__close" onClick={handleRouterBack}>
                 {'X'}
               </div>
