@@ -8,7 +8,7 @@ import './styles/index.scss';
 import { RouteObject } from 'react-router-dom';
 import App from './components/App';
 import About from './components/About/About';
-import { PROJECT_PATH } from './constants';
+import { PROJECT_PATH } from './utils/constants';
 
 export const routes: RouteObject[] = [
   {

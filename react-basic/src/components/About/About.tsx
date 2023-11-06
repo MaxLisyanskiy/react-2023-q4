@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ICharacter } from '../../types/characters';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { API_URL, PROJECT_PATH } from '../../constants';
+import { API_URL, PROJECT_PATH } from '../../utils/constants';
 import './About.scss';
 
 const About = () => {

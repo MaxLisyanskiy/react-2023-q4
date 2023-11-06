@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination/Pagination';
 import { generateLink } from '../../utils/generate-link';
-import { API_URL, PAGE, PAGE_SIZE, TOTAL_COUNT } from '../../constants';
+import { API_URL, PAGE, PAGE_SIZE, TOTAL_COUNT } from '../../utils/constants';
 import './Characters.scss';
 
 const Characters = ({ search }: { search: string }) => {

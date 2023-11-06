@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { PAGE } from '../../constants';
+import { PAGE } from '../../utils/constants';
 import { PaginationProps } from '../../types/characters';
 import './Pagination.scss';
 

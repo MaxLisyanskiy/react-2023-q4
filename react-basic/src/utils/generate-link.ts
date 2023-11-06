@@ -1,4 +1,4 @@
-import { PROJECT_PATH } from '../constants';
+import { PROJECT_PATH } from './constants';
 
 export function generateLink(
   page: number,
