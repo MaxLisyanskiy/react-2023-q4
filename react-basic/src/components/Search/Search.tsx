@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PROJECT_PATH } from '../../constants';
 import ErrorBtn from '../Error/ErrorBtn';
-import logoIMG from '../../assets/logo.webp';
+import logoIMG from '../../assets/logo.png';
 import './Search.scss';
 
 const Search = () => {
