@@ -44,10 +44,13 @@ const Pagination = ({ page, pageSize, totalCount, search }: PageInfoProps) => {
         <li>
           <select
             className="pagination__select"
+            value={pageSize}
             onChange={handleChangePageSize}
           >
-            {['1', '5', '10', '20', '50'].map((value) => (
-              <option key={value}>{value}</option>
+            {[1, 5, 10, 20, 50].map((value) => (
+              <option key={value} value={value}>
+                {value}
+              </option>
             ))}
           </select>
         </li>

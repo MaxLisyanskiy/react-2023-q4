@@ -7,12 +7,16 @@ import {
 import { useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination/Pagination';
+import { generateLink } from '../../utils/generate-link';
 import './Characters.scss';
 
 const API_URL: string = 'https://api.pokemontcg.io/v2/cards';
 
 const Characters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [searchValue, setSearchValue] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<string | null>(null);
+  const [currentPageSize, setCurrentPageSize] = useState<string | null>(null);
 
   const [characters, setCharacters] = useState<ICharacter[]>([]);
   const [pageInfo, setPageInfo] = useState<PageInfoProps>({
@@ -24,9 +28,21 @@ const Characters = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const search = searchParams.get('search') ?? '';
+    const search = searchParams.get('search') || '';
     const page = searchParams.get('page') ?? '1';
     const pageSize = searchParams.get('pageSize') || '10';
+
+    if (search !== searchValue) {
+      setSearchValue(search);
+    }
+
+    if (page !== currentPage) {
+      setCurrentPage(page);
+    }
+
+    if (pageSize !== currentPageSize) {
+      setCurrentPageSize(pageSize);
+    }
 
     if (search) {
       setSearchParams({ search, page, pageSize });
@@ -36,16 +52,16 @@ const Characters = () => {
 
     setPageInfo({ ...pageInfo, search });
 
-    if (
-      search !== pageInfo.search ||
-      Number(page) !== pageInfo.page ||
-      Number(pageSize) !== pageInfo.pageSize
-    ) {
-      getFetchCharacters(search || '', page, pageSize);
-    }
-
     localStorage.setItem('rss_project_01_search', '');
   }, [searchParams]); // eslint-disable-line
+
+  useEffect(() => {
+    getFetchCharacters(
+      searchValue || '',
+      currentPage || '1',
+      currentPageSize || '10',
+    );
+  }, [searchValue, currentPage, currentPageSize]); // eslint-disable-line
 
   const getFetchCharacters = async (
     search: string,
@@ -89,7 +105,14 @@ const Characters = () => {
                 {characters.map((item) => {
                   return (
                     <li className="item" key={item.id}>
-                      <Link to={`${item.id}`}>
+                      <Link
+                        to={generateLink(
+                          currentPage || '',
+                          currentPageSize || '',
+                          searchValue || '',
+                          item.id,
+                        )}
+                      >
                         <div>
                           <img src={item.images.small} alt={item.name} />
                         </div>
