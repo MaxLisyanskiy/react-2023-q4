@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { PROJECT_PATH } from '../../constants';
 import ErrorBtn from '../Error/ErrorBtn';
 import logoIMG from '../../assets/logo.webp';
-import './Search.css';
+import './Search.scss';
 
 const Search = () => {
   const [value, setValue] = useState<string>('');

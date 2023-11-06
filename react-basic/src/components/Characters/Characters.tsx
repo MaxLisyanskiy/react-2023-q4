@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { ICharacter, ICharacterResponse } from '../../types/characters';
-import notFoundIMG from '../../assets/not-found.webp';
 import { useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination/Pagination';
-import './Characters.css';
+import './Characters.scss';
 
 const API_URL: string = 'https://api.pokemontcg.io/v2/cards';
 
@@ -105,7 +104,6 @@ const Characters = () => {
             ) : (
               <div className="characters__not-found">
                 <p>Opps... not found</p>
-                <img src={notFoundIMG} alt="notFoundIMG" />
               </div>
             )}
           </>

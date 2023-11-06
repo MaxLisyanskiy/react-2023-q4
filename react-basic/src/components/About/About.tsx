@@ -24,10 +24,8 @@ const About = () => {
       const response: Response = await fetch(`${API_URL}/${id}`);
 
       if (response.status === 200) {
-        // const data: ICharacterResponse = await response.json();
-        const res = await response.json();
+        const res: { data: ICharacter } = await response.json();
         setCharacter(res.data);
-        console.log(res.data);
       } else {
       }
     } catch (error) {
@@ -55,9 +53,6 @@ const About = () => {
         <>
           {character ? (
             <div className="about__item" key={character.id}>
-              {/* <div>
-                <img src={character.images.small} alt={character.name} />
-              </div> */}
               <div className="item__wrapp">
                 <h2 className="item__title">
                   {character.name} {character.hp}
