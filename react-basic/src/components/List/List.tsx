@@ -1,13 +1,14 @@
 import Pagination from '../Pagination/Pagination';
 import { useContext, useEffect, useState } from 'react';
-import { ICharacter, ICharacterResponse } from '../../types/characters';
+import { ICharacterResponse } from '../../types/characters';
 import { Link } from 'react-router-dom';
 import { generateLink } from '../../utils/generate-link';
 import { API_URL, TOTAL_COUNT } from '../../utils/constants';
 import { SearchContext } from '../../context/search-context';
-import { SearchContextType } from '../../types/context-types';
-import './List.scss';
+import { CardsContextType, SearchContextType } from '../../types/context-types';
 import Spinner from '../Spinner/Spinner';
+import { CardsContext } from '../../context/cards-context';
+import './List.scss';
 
 export interface ListProps {
   currentPage: number;
@@ -21,16 +22,16 @@ const List = (props: ListProps) => {
     props;
 
   const { search } = useContext(SearchContext) as SearchContextType;
+  const { cards, setCards } = useContext(CardsContext) as CardsContextType;
 
   const [currentTotalCount, setCurrentTotalCount] =
     useState<number>(TOTAL_COUNT);
 
-  const [characters, setCharacters] = useState<ICharacter[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     getFetchData(search, currentPage, currentPageSize);
-  }, [search, currentPage, currentPageSize]);
+  }, [search, currentPage, currentPageSize]); // eslint-disable-line
 
   const getFetchData = async (
     search: string,
@@ -50,12 +51,12 @@ const List = (props: ListProps) => {
         const { data, totalCount }: ICharacterResponse = await response.json();
 
         setCurrentTotalCount(totalCount);
-        setCharacters(data);
+        setCards(data);
       } else {
-        setCharacters([]);
+        setCards([]);
       }
     } catch (error) {
-      setCharacters([]);
+      setCards([]);
       console.error('Error:', error);
     } finally {
       setIsLoading(false);
@@ -68,10 +69,10 @@ const List = (props: ListProps) => {
         {isLoading && <Spinner />}
         {!isLoading && (
           <>
-            {characters.length > 0 ? (
+            {cards.length > 0 ? (
               <>
                 <ul className="list">
-                  {characters.map((item) => {
+                  {cards.map((item) => {
                     return (
                       <li className="item" key={item.id}>
                         <Link

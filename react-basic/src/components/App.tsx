@@ -6,6 +6,7 @@ import SearchProvider from '../context/search-context';
 import { useEffect, useState } from 'react';
 import { generateLink } from '../utils/generate-link';
 import { PAGE, PAGE_SIZE } from '../utils/constants';
+import CardsProvider from '../context/cards-context';
 
 const App = () => {
   const navigate = useNavigate();
@@ -45,19 +46,21 @@ const App = () => {
 
   return (
     <SearchProvider>
-      <Search onChangeSearch={handleChangeSearch} />
-      <main className="main">
-        <h1 className="main-title">Welcome to the Pokémon Home</h1>
-        <div className="main-wrapp">
-          <List
-            currentPage={currentPage}
-            currentPageSize={currentPageSize}
-            onPageChange={handleChangePage}
-            onPageSizeChange={handleChangePageSize}
-          />
-          <Outlet />
-        </div>
-      </main>
+      <CardsProvider>
+        <Search onChangeSearch={handleChangeSearch} />
+        <main className="main">
+          <h1 className="main-title">Welcome to the Pokémon Home</h1>
+          <div className="main-wrapp">
+            <List
+              currentPage={currentPage}
+              currentPageSize={currentPageSize}
+              onPageChange={handleChangePage}
+              onPageSizeChange={handleChangePageSize}
+            />
+            <Outlet />
+          </div>
+        </main>
+      </CardsProvider>
     </SearchProvider>
   );
 };
