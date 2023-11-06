@@ -28,7 +28,7 @@ const Pagination = ({
   };
 
   const handleChangePageSize = (event: ChangeEvent<HTMLSelectElement>) => {
-    const newUrl = `/react-2023-q4/react-basic?page=${page}&pageSize=${event.target.value}`;
+    const newUrl = `/react-2023-q4/react-basic?page=1&pageSize=${event.target.value}`;
 
     navigate(search ? newUrl + `&search=${search}` : newUrl);
   };

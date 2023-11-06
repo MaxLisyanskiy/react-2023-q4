@@ -9,6 +9,8 @@ body {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+  background: rgb(32, 35, 41);
+  color: white;
 }
 
 button {
@@ -28,4 +30,21 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.main {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-title {
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: calc(26px + 6 * ((100vw - 320px) / 680));
+}
+
+.main-wrapp {
+  display: flex;
 }

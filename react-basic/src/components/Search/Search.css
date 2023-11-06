@@ -1,8 +1,15 @@
 .search {
-  padding: 15px 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: rgb(57 64 92);
+  border-radius: 0px 0px 50px 50px;
+  z-index: 2;
 }
 
 .search__logo {

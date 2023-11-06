@@ -3,15 +3,10 @@ import { ICharacter, ICharacterResponse } from '../../types/characters';
 import notFoundIMG from '../../assets/not-found.webp';
 import { useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-
-import './Characters.css';
 import Pagination from '../Pagination/Pagination';
+import './Characters.css';
 
-// const API_URL: string = 'https://rickandmortyapi.com/api/character';
-// const API_URL: string = 'https://api.slingacademy.com/v1/sample-data/users';
 const API_URL: string = 'https://api.pokemontcg.io/v2/cards';
-
-// { searchValue }: { searchValue: string }
 
 interface PageInfoProps {
   search: string | null;
@@ -33,8 +28,8 @@ const Characters = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const search = searchParams.get('search') || '';
-    const page = searchParams.get('page') || '1';
+    const search = searchParams.get('search') ?? '';
+    const page = searchParams.get('page') ?? '1';
     const pageSize = searchParams.get('pageSize') || '10';
 
     if (search) {
@@ -45,14 +40,16 @@ const Characters = () => {
 
     setPageInfo({ ...pageInfo, search });
 
-    // setSearchParams({ page: '1', limit: '20' });
-    // getFetchCharacters(search ?? '');
-    getFetchCharacters(search, page, pageSize);
-    // localStorage.setItem('rss_project_01_search', search ?? '');
-    localStorage.setItem('rss_project_01_search', '');
-  }, [searchParams]);
+    if (
+      search !== pageInfo.search ||
+      Number(page) !== pageInfo.page ||
+      Number(pageSize) !== pageInfo.pageSize
+    ) {
+      getFetchCharacters(search || '', page, pageSize);
+    }
 
-  // eslint-disable-line
+    localStorage.setItem('rss_project_01_search', '');
+  }, [searchParams]); // eslint-disable-line
 
   const getFetchCharacters = async (
     search: string,
@@ -100,22 +97,6 @@ const Characters = () => {
                         <div>
                           <img src={item.images.small} alt={item.name} />
                         </div>
-                        {/* <div className="item__wrapp">
-                        <h2 className="item__title">
-                          {item.first_name} {item.last_name}
-                        </h2>
-                        <h4 className="item__subtitle">
-                          {'Country'} - {item.country}
-                        </h4>
-                        <div className="item__additional">
-                          <span>Gender:</span>
-                          <p>{item.gender}</p>
-                        </div>
-                        <div className="item__additional">
-                          <span>Job:</span>
-                          <p>{item.job}</p>
-                        </div>
-                      </div> */}
                       </Link>
                     </li>
                   );

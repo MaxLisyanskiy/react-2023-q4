@@ -6,9 +6,9 @@ const App = () => {
   return (
     <>
       <Search />
-      <main style={{ display: 'flex' }}>
-        <h1 className="characters__title">Welcome to the Pokémon Home</h1>
-        <div>
+      <main className="main">
+        <h1 className="main-title">Welcome to the Pokémon Home</h1>
+        <div className="main-wrapp">
           <Characters />
           <Outlet />
         </div>

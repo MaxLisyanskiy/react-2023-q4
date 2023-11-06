@@ -26,7 +26,13 @@ const Search = () => {
     <header className="search">
       <img className="search__logo" src={logoIMG} alt="logo" />
       <div className="search__wrapp">
-        <input className="search__input" type="text" placeholder="Search..." value={value} onChange={handleChange} />
+        <input
+          className="search__input"
+          type="text"
+          placeholder="Search..."
+          value={value}
+          onChange={handleChange}
+        />
         <button onClick={handleSeacrh}>Search 🔍</button>
       </div>
       <ErrorBtn />

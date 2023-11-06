@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { ICharacter } from '../../types/characters';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import './About.scss';
 
 const API_URL: string = 'https://api.pokemontcg.io/v2/cards';
 
 const About = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const [character, setCharacter] = useState<ICharacter | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -34,14 +37,24 @@ const About = () => {
     }
   };
 
+  const handleRouterBack = () => {
+    const search = searchParams.get('search') || '';
+    const page = searchParams.get('page') || '1';
+    const pageSize = searchParams.get('pageSize') || '10';
+
+    const newUrl = `/react-2023-q4/react-basic?page=${page}&pageSize=${pageSize}`;
+    navigate(search ? newUrl + `&search=${search}` : newUrl);
+  };
+
   return (
-    <section className="characters__section">
+    <section className="about">
+      <div className="about__background" onClick={handleRouterBack}></div>
       {isLoading ? (
         <div className="characters__loading">Loading...</div>
       ) : (
         <>
           {character ? (
-            <div className="item" key={character.id}>
+            <div className="about__item" key={character.id}>
               {/* <div>
                 <img src={character.images.small} alt={character.name} />
               </div> */}
