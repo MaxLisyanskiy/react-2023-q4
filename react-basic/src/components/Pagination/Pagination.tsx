@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import { PAGE } from '../../constants';
 import { PaginationProps } from '../../types/characters';
 import './Pagination.scss';
 
@@ -15,7 +16,7 @@ const Pagination = ({
   };
 
   const handleChangePageSize = (event: ChangeEvent<HTMLSelectElement>) => {
-    changePagination(1, Number(event.target.value));
+    changePagination(PAGE, Number(event.target.value));
   };
 
   return (
@@ -23,7 +24,7 @@ const Pagination = ({
       <ul className="pagination__list">
         <button
           className="pagination__item"
-          disabled={page <= 1}
+          disabled={page <= PAGE}
           onClick={() => handleChangePage('prev')}
         >
           {'<'}

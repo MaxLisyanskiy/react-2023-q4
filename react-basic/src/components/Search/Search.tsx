@@ -1,22 +1,23 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { PROJECT_PATH } from '../../constants';
 import ErrorBtn from '../Error/ErrorBtn';
 import logoIMG from '../../assets/logo.png';
 import './Search.scss';
 
-const Search = () => {
+interface Props {
+  changeSearch: (value: string) => void;
+}
+
+const Search = (props: Props) => {
   const [value, setValue] = useState<string>('');
-  const navigate = useNavigate();
 
   useEffect(() => {
     const ls: string | null = localStorage.getItem('rss_project_01_search');
-
     if (ls) setValue(ls);
   }, []);
 
   const handleSeacrh = () => {
-    navigate(`${PROJECT_PATH}?search=${value}&page=1&limit=10`);
+    props.changeSearch(value);
+    localStorage.setItem('rss_project_01_search', value);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { ICharacter } from '../../types/characters';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { PROJECT_PATH } from '../../constants';
+import { API_URL, PROJECT_PATH } from '../../constants';
 import './About.scss';
-
-const API_URL: string = 'https://api.pokemontcg.io/v2/cards';
 
 const About = () => {
   const { id } = useParams();

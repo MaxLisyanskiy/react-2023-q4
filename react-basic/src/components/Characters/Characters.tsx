@@ -4,26 +4,26 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination/Pagination';
 import { generateLink } from '../../utils/generate-link';
+import { API_URL, PAGE, PAGE_SIZE, TOTAL_COUNT } from '../../constants';
 import './Characters.scss';
 
-const API_URL: string = 'https://api.pokemontcg.io/v2/cards';
-
-const Characters = () => {
+const Characters = ({ search }: { search: string }) => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [searchValue, setSearchValue] = useState<string>('');
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [currentPageSize, setCurrentPageSize] = useState<number>(10);
-  const [currentTotalCount, setCurrentTotalCount] = useState<number>(100);
+  const [currentPage, setCurrentPage] = useState<number>(PAGE);
+  const [currentPageSize, setCurrentPageSize] = useState<number>(PAGE_SIZE);
+  const [currentTotalCount, setCurrentTotalCount] =
+    useState<number>(TOTAL_COUNT);
 
   const [characters, setCharacters] = useState<ICharacter[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const search = searchParams.get('search') ?? '';
-    const page = searchParams.get('page') ?? '1';
-    const pageSize = searchParams.get('pageSize') ?? '10';
+    const page = searchParams.get('page') ?? String(PAGE);
+    const pageSize = searchParams.get('pageSize') ?? String(PAGE_SIZE);
 
     if (search !== searchValue) {
       setSearchValue(search);
@@ -33,7 +33,6 @@ const Characters = () => {
       setCurrentPage(+page);
     }
 
-    console.log(pageSize);
     if (+pageSize !== currentPageSize) {
       setCurrentPageSize(+pageSize);
     }
@@ -45,18 +44,14 @@ const Characters = () => {
     }
 
     getFetchCharacters(search, +page, +pageSize);
-
-    localStorage.setItem('rss_project_01_search', search);
   }, []); // eslint-disable-line
 
   useEffect(() => {
-    const search = searchParams.get('search') ?? '';
-
     if (search !== searchValue) {
       setSearchValue(search);
       getFetchCharacters(search, currentPage, currentPageSize);
     }
-  }, [searchParams]); // eslint-disable-line
+  }, [search]); // eslint-disable-line
 
   const getFetchCharacters = async (
     search: string,
