@@ -1,26 +1,21 @@
 import { ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { PROJECT_PATH } from '../../constants';
-import { PageInfoProps } from '../../types/characters';
+import { PaginationProps } from '../../types/characters';
 import './Pagination.scss';
 
-const Pagination = ({ page, pageSize, totalCount, search }: PageInfoProps) => {
-  const navigate = useNavigate();
-
-  const totalPages = Math.ceil(totalCount / pageSize);
+const Pagination = ({
+  page,
+  pageSize,
+  totalCount,
+  changePagination,
+}: PaginationProps) => {
+  const totalPages = Math.ceil(+totalCount / +pageSize);
 
   const handleChangePage = (type: 'prev' | 'next') => {
-    const newUrl = `${PROJECT_PATH}?page=${
-      type === 'prev' ? page - 1 : page + 1
-    }&pageSize=${pageSize}`;
-
-    navigate(search ? newUrl + `&search=${search}` : newUrl);
+    changePagination(type === 'prev' ? page - 1 : page + 1, pageSize);
   };
 
   const handleChangePageSize = (event: ChangeEvent<HTMLSelectElement>) => {
-    const newUrl = `${PROJECT_PATH}?page=1&pageSize=${event.target.value}`;
-
-    navigate(search ? newUrl + `&search=${search}` : newUrl);
+    changePagination(1, Number(event.target.value));
   };
 
   return (

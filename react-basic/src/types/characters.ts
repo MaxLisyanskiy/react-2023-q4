@@ -126,9 +126,9 @@ export interface ICharacterResponse {
   totalCount: number;
 }
 
-export interface PageInfoProps {
-  search: string | null;
+export interface PaginationProps {
   page: number;
   pageSize: number;
   totalCount: number;
+  changePagination: (pageNumber: number, pageSizeValue: number) => void;
 }

@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
-import {
-  ICharacter,
-  ICharacterResponse,
-  PageInfoProps,
-} from '../../types/characters';
-import { useSearchParams } from 'react-router-dom';
+import { ICharacter, ICharacterResponse } from '../../types/characters';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination/Pagination';
 import { generateLink } from '../../utils/generate-link';
@@ -13,35 +9,33 @@ import './Characters.scss';
 const API_URL: string = 'https://api.pokemontcg.io/v2/cards';
 
 const Characters = () => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchValue, setSearchValue] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<string | null>(null);
-  const [currentPageSize, setCurrentPageSize] = useState<string | null>(null);
+
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPageSize, setCurrentPageSize] = useState<number>(10);
+  const [currentTotalCount, setCurrentTotalCount] = useState<number>(100);
 
   const [characters, setCharacters] = useState<ICharacter[]>([]);
-  const [pageInfo, setPageInfo] = useState<PageInfoProps>({
-    search: null,
-    page: 1,
-    pageSize: 10,
-    totalCount: 100,
-  });
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const search = searchParams.get('search') || '';
+    const search = searchParams.get('search') ?? '';
     const page = searchParams.get('page') ?? '1';
-    const pageSize = searchParams.get('pageSize') || '10';
+    const pageSize = searchParams.get('pageSize') ?? '10';
 
     if (search !== searchValue) {
       setSearchValue(search);
     }
 
-    if (page !== currentPage) {
-      setCurrentPage(page);
+    if (+page !== currentPage) {
+      setCurrentPage(+page);
     }
 
-    if (pageSize !== currentPageSize) {
-      setCurrentPageSize(pageSize);
+    console.log(pageSize);
+    if (+pageSize !== currentPageSize) {
+      setCurrentPageSize(+pageSize);
     }
 
     if (search) {
@@ -50,25 +44,26 @@ const Characters = () => {
       setSearchParams({ page, pageSize });
     }
 
-    setPageInfo({ ...pageInfo, search });
+    getFetchCharacters(search, +page, +pageSize);
 
-    localStorage.setItem('rss_project_01_search', '');
-  }, [searchParams]); // eslint-disable-line
+    localStorage.setItem('rss_project_01_search', search);
+  }, []); // eslint-disable-line
 
   useEffect(() => {
-    getFetchCharacters(
-      searchValue || '',
-      currentPage || '1',
-      currentPageSize || '10',
-    );
-  }, [searchValue, currentPage, currentPageSize]); // eslint-disable-line
+    const search = searchParams.get('search') ?? '';
+
+    if (search !== searchValue) {
+      setSearchValue(search);
+      getFetchCharacters(search, currentPage, currentPageSize);
+    }
+  }, [searchParams]); // eslint-disable-line
 
   const getFetchCharacters = async (
     search: string,
-    page: string,
-    pageSize: string,
+    page: number,
+    pageSize: number,
   ): Promise<void> => {
-    setLoading(true);
+    setIsLoading(true);
 
     try {
       const response: Response = await fetch(
@@ -80,7 +75,10 @@ const Characters = () => {
       if (response.status === 200) {
         const { data, page, pageSize, totalCount }: ICharacterResponse =
           await response.json();
-        setPageInfo({ ...pageInfo, page, pageSize, totalCount });
+
+        setCurrentPage(page);
+        setCurrentPageSize(pageSize);
+        setCurrentTotalCount(totalCount);
         setCharacters(data);
       } else {
         setCharacters([]);
@@ -89,14 +87,24 @@ const Characters = () => {
       setCharacters([]);
       console.error('Error:', error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
+  };
+
+  const handleChangePagination = (
+    pageNumber: number,
+    pageSizeValue: number,
+  ) => {
+    setCurrentPage(pageNumber);
+    setCurrentPageSize(pageSizeValue);
+    navigate(generateLink(pageNumber, pageSizeValue, searchValue));
+    getFetchCharacters(searchValue, pageNumber, pageSizeValue);
   };
 
   return (
     <section className="characters">
       <div className="characters__section">
-        {loading ? (
+        {isLoading ? (
           <div className="characters__loading">Loading...</div>
         ) : (
           <>
@@ -107,9 +115,9 @@ const Characters = () => {
                     <li className="item" key={item.id}>
                       <Link
                         to={generateLink(
-                          currentPage || '',
-                          currentPageSize || '',
-                          searchValue || '',
+                          currentPage,
+                          currentPageSize,
+                          searchValue,
                           item.id,
                         )}
                       >
@@ -129,10 +137,12 @@ const Characters = () => {
           </>
         )}
         <Pagination
-          page={pageInfo.page}
-          pageSize={pageInfo.pageSize}
-          totalCount={pageInfo.totalCount}
-          search={pageInfo.search}
+          page={Number(currentPage)}
+          pageSize={Number(currentPageSize)}
+          totalCount={Number(currentTotalCount)}
+          changePagination={(pageNumber, pageSizeValue) =>
+            handleChangePagination(pageNumber, pageSizeValue)
+          }
         />
       </div>
     </section>
