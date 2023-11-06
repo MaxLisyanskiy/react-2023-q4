@@ -1,26 +1,16 @@
 import { ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PROJECT_PATH } from '../../constants';
+import { PageInfoProps } from '../../types/characters';
 import './Pagination.scss';
 
-interface PaginationProps {
-  search: string | null;
-  page: number;
-  pageSize: number;
-  totalCount: number;
-}
-
-const Pagination = ({
-  page,
-  pageSize,
-  totalCount,
-  search,
-}: PaginationProps) => {
+const Pagination = ({ page, pageSize, totalCount, search }: PageInfoProps) => {
   const navigate = useNavigate();
 
   const totalPages = Math.ceil(totalCount / pageSize);
 
   const handleChangePage = (type: 'prev' | 'next') => {
-    const newUrl = `/react-2023-q4/react-basic?page=${
+    const newUrl = `${PROJECT_PATH}?page=${
       type === 'prev' ? page - 1 : page + 1
     }&pageSize=${pageSize}`;
 
@@ -28,7 +18,7 @@ const Pagination = ({
   };
 
   const handleChangePageSize = (event: ChangeEvent<HTMLSelectElement>) => {
-    const newUrl = `/react-2023-q4/react-basic?page=1&pageSize=${event.target.value}`;
+    const newUrl = `${PROJECT_PATH}?page=1&pageSize=${event.target.value}`;
 
     navigate(search ? newUrl + `&search=${search}` : newUrl);
   };

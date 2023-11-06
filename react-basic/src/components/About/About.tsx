@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ICharacter } from '../../types/characters';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { PROJECT_PATH } from '../../constants';
 import './About.scss';
 
 const API_URL: string = 'https://api.pokemontcg.io/v2/cards';
@@ -40,7 +41,7 @@ const About = () => {
     const page = searchParams.get('page') || '1';
     const pageSize = searchParams.get('pageSize') || '10';
 
-    const newUrl = `/react-2023-q4/react-basic?page=${page}&pageSize=${pageSize}`;
+    const newUrl = `${PROJECT_PATH}?page=${page}&pageSize=${pageSize}`;
     navigate(search ? newUrl + `&search=${search}` : newUrl);
   };
 

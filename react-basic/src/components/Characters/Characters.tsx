@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react';
-import { ICharacter, ICharacterResponse } from '../../types/characters';
+import {
+  ICharacter,
+  ICharacterResponse,
+  PageInfoProps,
+} from '../../types/characters';
 import { useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Pagination from '../Pagination/Pagination';
 import './Characters.scss';
 
 const API_URL: string = 'https://api.pokemontcg.io/v2/cards';
-
-interface PageInfoProps {
-  search: string | null;
-  page: number;
-  pageSize: number;
-  totalCount: number;
-}
 
 const Characters = () => {
   const [searchParams, setSearchParams] = useSearchParams();

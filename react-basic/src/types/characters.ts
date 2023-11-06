@@ -125,3 +125,10 @@ export interface ICharacterResponse {
   count: number;
   totalCount: number;
 }
+
+export interface PageInfoProps {
+  search: string | null;
+  page: number;
+  pageSize: number;
+  totalCount: number;
+}
