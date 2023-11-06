@@ -1,12 +1,12 @@
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 
-import Search from './Search/Search';
-import List from './List/List';
-import SearchProvider from '../context/search-context';
+import Search from '../Search/Search';
+import List from '../List/List';
+import SearchProvider from '../../context/search-context';
 import { useEffect, useState } from 'react';
-import { generateLink } from '../utils/generate-link';
-import { PAGE, PAGE_SIZE } from '../utils/constants';
-import CardsProvider from '../context/cards-context';
+import { generateLink } from '../../utils/generate-link';
+import { PAGE, PAGE_SIZE } from '../../utils/constants';
+import CardsProvider from '../../context/cards-context';
 
 const App = () => {
   const navigate = useNavigate();

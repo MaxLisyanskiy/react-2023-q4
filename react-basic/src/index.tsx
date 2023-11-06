@@ -5,7 +5,7 @@ import { RouteObject } from 'react-router-dom';
 import { PROJECT_PATH } from './utils/constants';
 
 import ErrorBoundary from './components/Error/ErrorBoundary';
-import App from './components/App';
+import App from './components/App/App';
 import About from './components/About/About';
 import './styles/index.scss';
 

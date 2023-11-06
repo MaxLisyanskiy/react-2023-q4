@@ -3,3 +3,4 @@
 
 cd react-basic
 npx "lint-staged"
+npm run test --watchAll=false
