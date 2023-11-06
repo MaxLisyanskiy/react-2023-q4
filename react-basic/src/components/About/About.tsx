@@ -3,6 +3,7 @@ import { ICharacter } from '../../types/characters';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { API_URL, PROJECT_PATH } from '../../utils/constants';
 import './About.scss';
+import Spinner from '../Spinner/Spinner';
 
 const About = () => {
   const { id } = useParams();
@@ -46,11 +47,8 @@ const About = () => {
   return (
     <section className="about">
       <div className="about__background" onClick={handleRouterBack}></div>
-      {isLoading ? (
-        <div className="about__item">
-          <div className="characters__loading">Loading...</div>
-        </div>
-      ) : (
+      {isLoading && <Spinner />}
+      {!isLoading && (
         <>
           {character ? (
             <div className="about__item" key={character.id}>

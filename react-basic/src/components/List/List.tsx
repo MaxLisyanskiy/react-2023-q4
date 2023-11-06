@@ -7,6 +7,7 @@ import { API_URL, TOTAL_COUNT } from '../../utils/constants';
 import { SearchContext } from '../../context/search-context';
 import { SearchContextType } from '../../types/context-types';
 import './List.scss';
+import Spinner from '../Spinner/Spinner';
 
 export interface ListProps {
   currentPage: number;
@@ -64,7 +65,7 @@ const List = (props: ListProps) => {
   return (
     <section className="characters">
       <div className="characters__section">
-        {isLoading && <div className="characters__loading">Loading...</div>}
+        {isLoading && <Spinner />}
         {!isLoading && (
           <>
             {characters.length > 0 ? (
