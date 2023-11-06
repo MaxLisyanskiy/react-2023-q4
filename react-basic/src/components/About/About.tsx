@@ -49,7 +49,9 @@ const About = () => {
     <section className="about">
       <div className="about__background" onClick={handleRouterBack}></div>
       {isLoading ? (
-        <div className="characters__loading">Loading...</div>
+        <div className="about__item">
+          <div className="characters__loading">Loading...</div>
+        </div>
       ) : (
         <>
           {character ? (
