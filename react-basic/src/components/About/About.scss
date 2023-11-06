@@ -20,4 +20,11 @@
     color: white;
     z-index: 5;
   }
+
+  &__close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    cursor: pointer;
+  }
 }

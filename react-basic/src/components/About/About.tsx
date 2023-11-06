@@ -53,6 +53,9 @@ const About = () => {
         <>
           {character ? (
             <div className="about__item" key={character.id}>
+              <div className="about__close" onClick={handleRouterBack}>
+                {'X'}
+              </div>
               <div className="item__wrapp">
                 <h2 className="item__title">
                   {character.name} {character.hp}
@@ -72,6 +75,9 @@ const About = () => {
             </div>
           ) : (
             <div className="characters__not-found">
+              <div className="about__close" onClick={handleRouterBack}>
+                {'X'}
+              </div>
               <p>Opps... not found</p>
             </div>
           )}
