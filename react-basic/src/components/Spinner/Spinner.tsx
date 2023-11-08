@@ -1,9 +1,9 @@
-import './Spinner.scss';
+import classes from './Spinner.module.scss';
 
 export default function Spinner() {
   return (
-    <div className="spinner-container">
-      <div className="loading-spinner"></div>
+    <div className={classes.container}>
+      <div className={classes.spinner}></div>
     </div>
   );
 }

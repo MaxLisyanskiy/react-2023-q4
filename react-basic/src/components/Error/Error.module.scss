@@ -1,27 +1,28 @@
-.error {
+.page {
   height: 100vh;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: black;
 }
 
-.error__title {
+.title {
   margin-bottom: 20px;
+  text-align: center;
   font-size: calc(26px + 6 * ((100vw - 320px) / 680));
-  color: white;
 }
 
-.error__img {
+.img {
   max-height: 500px;
   width: auto;
 }
 
-.error__reload-btn {
+.reloadBtn {
   margin-top: 30px;
+  background-color: rgb(255 255 255 / 70%);
 }
 
-.error_btn {
+.throwErrorBtn {
   background-color: #f9bfbf;
 }

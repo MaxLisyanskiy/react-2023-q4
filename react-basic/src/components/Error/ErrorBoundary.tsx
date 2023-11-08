@@ -1,6 +1,6 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
-import errorIMG from '../../assets/error.jpg';
-import './Error.css';
+import errorIMG from '../../assets/error.webp';
+import classes from './Error.module.scss';
 
 type IErrorBoundaryProps = {
   children?: ReactNode;
@@ -37,13 +37,12 @@ class ErrorBoundary extends Component<
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="error">
-          <h1 className="error__title">Error... Something went wrong!</h1>
-          <img className="error__img" src={errorIMG} alt="error" />
-          <button className="error__reload-btn" onClick={this.handleReloadPage}>
+        <div className={classes.page}>
+          <h1 className={classes.title}>Error... Something went wrong!</h1>
+          <img className={classes.img} src={errorIMG} alt="error" />
+          <button className={classes.reloadBtn} onClick={this.handleReloadPage}>
             Reload Page
           </button>
-          ;
         </div>
       );
     }

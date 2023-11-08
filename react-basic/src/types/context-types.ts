@@ -1,4 +1,4 @@
-import { ICharacter } from './characters';
+import { ICard } from './card-type';
 
 export type ProviderProps = {
   children: string | JSX.Element | JSX.Element[];
@@ -10,6 +10,6 @@ export type SearchContextType = {
 };
 
 export type CardsContextType = {
-  cards: ICharacter[] | [];
-  setCards: (cards: ICharacter[] | []) => void;
+  cards: ICard[] | [];
+  setCards: (cards: ICard[] | []) => void;
 };

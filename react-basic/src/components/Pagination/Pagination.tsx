@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 import { PAGE } from '../../utils/constants';
-import './Pagination.scss';
+import classes from './Pagination.module.scss';
 
 export interface PaginationProps {
   page: number;
@@ -28,18 +28,18 @@ const Pagination = ({
   };
 
   return (
-    <div className="pagination">
-      <ul className="pagination__list">
+    <div className={classes.pagination}>
+      <ul className={classes.list}>
         <button
-          className="pagination__item"
+          className={classes.item}
           disabled={page <= PAGE}
           onClick={() => handleChangePage('prev')}
         >
           {'<'}
         </button>
-        <li className="pagination__item">{page}</li>
+        <li className={classes.item}>{page}</li>
         <button
-          className="pagination__item"
+          className={classes.item}
           disabled={page === totalPages}
           onClick={() => handleChangePage('next')}
         >
@@ -47,7 +47,7 @@ const Pagination = ({
         </button>
         <li>
           <select
-            className="pagination__select"
+            className={classes.select}
             value={pageSize}
             onChange={handleChangePageSize}
           >

@@ -6,7 +6,9 @@ import { PROJECT_PATH } from './utils/constants';
 
 import ErrorBoundary from './components/Error/ErrorBoundary';
 import App from './components/App/App';
-import About from './components/About/About';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
+import DetailedCard from './components/DetailedCard/DetailedCard';
+
 import './styles/index.scss';
 
 export const routes: RouteObject[] = [
@@ -17,10 +19,11 @@ export const routes: RouteObject[] = [
         <App />
       </ErrorBoundary>
     ),
+    errorElement: <ErrorPage />,
     children: [
       {
         path: ':id',
-        element: <About />,
+        element: <DetailedCard />,
       },
     ],
   },

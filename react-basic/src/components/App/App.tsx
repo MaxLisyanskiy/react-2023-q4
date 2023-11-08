@@ -1,7 +1,7 @@
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 
 import Search from '../Search/Search';
-import List from '../List/List';
+import CardList from '../CardList/CardList';
 import SearchProvider from '../../context/search-context';
 import { useEffect, useState } from 'react';
 import { generateLink } from '../../utils/generate-link';
@@ -51,7 +51,7 @@ const App = () => {
         <main className="main">
           <h1 className="main-title">Welcome to the Pokémon Home</h1>
           <div className="main-wrapp">
-            <List
+            <CardList
               currentPage={currentPage}
               currentPageSize={currentPageSize}
               onPageChange={handleChangePage}

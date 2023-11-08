@@ -1,9 +1,9 @@
 import { ChangeEvent, useContext, useState } from 'react';
-import ErrorBtn from '../Error/ErrorBtn';
-import logoIMG from '../../assets/logo.png';
 import { SearchContext } from '../../context/search-context';
 import { SearchContextType } from '../../types/context-types';
-import './Search.scss';
+import ErrorBtn from '../Error/ErrorBtn';
+import logoIMG from '../../assets/logo.png';
+import classes from './Search.module.scss';
 
 export interface SearchProps {
   onChangeSearch: () => void;
@@ -27,11 +27,11 @@ const Search = ({ onChangeSearch }: SearchProps) => {
   };
 
   return (
-    <header className="search">
-      <img className="search__logo" src={logoIMG} alt="logo" />
-      <div className="search__wrapp">
+    <header className={classes.search}>
+      <img className={classes.logo} src={logoIMG} alt="logo" />
+      <div className={classes.wrapp}>
         <input
-          className="search__input"
+          className={classes.input}
           type="text"
           placeholder="Search..."
           value={value}
