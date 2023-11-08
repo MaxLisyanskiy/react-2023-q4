@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import { ICardsResponse } from '../../types/card-type';
-import { API_URL, TOTAL_COUNT } from '../../utils/constants';
+import { TOTAL_COUNT } from '../../utils/constants';
+import { getAllCards } from '../../services/fetchData';
 import { SearchContext } from '../../context/search-context';
 import { CardsContextType, SearchContextType } from '../../types/context-types';
 import { CardsContext } from '../../context/cards-context';
@@ -40,27 +40,17 @@ const CardList = (props: CardListProps) => {
   ): Promise<void> => {
     setIsLoading(true);
 
-    try {
-      const response: Response = await fetch(
-        search.trim() !== ''
-          ? `${API_URL}?q=name:${search}&page=${page}&pageSize=${pageSize}&select=id,name,images`
-          : `${API_URL}?page=${page}&pageSize=${pageSize}&select=id,name,images`,
-      );
-
-      if (response.status === 200) {
-        const { data, totalCount }: ICardsResponse = await response.json();
-
-        setCurrentTotalCount(totalCount);
+    getAllCards(page, pageSize, search)
+      .then(({ data, totalCount }) => {
         setCards(data);
-      } else {
-        setCards([]);
-      }
-    } catch (error) {
-      setCards([]);
-      console.error('Error:', error);
-    } finally {
-      setIsLoading(false);
-    }
+        setCurrentTotalCount(totalCount);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (

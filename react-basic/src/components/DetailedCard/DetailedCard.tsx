@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { IDetailedCard } from '../../types/card-type';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { API_URL, PAGE, PAGE_SIZE, PROJECT_PATH } from '../../utils/constants';
+import { PAGE, PAGE_SIZE, PROJECT_PATH } from '../../utils/constants';
 import Spinner from '../Spinner/Spinner';
 import notFoundItemIMG from '../../assets/detail-not-found.png';
 import classes from './DetailedCard.module.scss';
+import { getDetailedCard } from '../../services/fetchData';
 
 const DetailedCard = () => {
   const { id } = useParams();
@@ -15,27 +16,20 @@ const DetailedCard = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    getFetchCharacter(id || '');
+    getFetchDetailedCard(id || '');
   }, [id]);
 
-  const getFetchCharacter = async (id: string): Promise<void> => {
+  const getFetchDetailedCard = async (id: string): Promise<void> => {
     setIsLoading(true);
 
-    try {
-      const response: Response = await fetch(
-        `${API_URL}/${id}?select=id,name,images,hp,rarity,supertype,flavorText`,
-      );
-
-      if (response.status === 200) {
-        const res: { data: IDetailedCard } = await response.json();
-        setCharacter(res.data);
-      } else {
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    getDetailedCard(id)
+      .then(({ data }) => setCharacter(data))
+      .catch((error) => {
+        console.error('Error:', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleRouterBack = () => {

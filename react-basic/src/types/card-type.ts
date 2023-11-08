@@ -18,3 +18,7 @@ export interface ICardsResponse {
   count: number;
   totalCount: number;
 }
+
+export interface IDetailedCardResponse {
+  data: IDetailedCard;
+}
