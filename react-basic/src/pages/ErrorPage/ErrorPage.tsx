@@ -24,7 +24,7 @@ const ErrorPage = () => {
       <h1>Oops!</h1>
       <p>Sorry, an unexpected error has occurred.</p>
       <p className={classes.title}>
-        <i>{errorMessage}</i>
+        <i data-testid={'errorMessage'}>{errorMessage}</i>
       </p>
       <button className={classes.button}>
         <Link to={generateLink(PAGE, PAGE_SIZE)}>Back to main page?</Link>
