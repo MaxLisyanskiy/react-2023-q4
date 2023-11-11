@@ -3,7 +3,7 @@ import { generateLink } from '../../utils/generate-link';
 
 import classes from './Card.module.scss';
 
-interface CardProps {
+export interface CardProps {
   id: string;
   image: string;
   name: string;
