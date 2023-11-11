@@ -28,7 +28,7 @@ const Pagination = ({
   };
 
   return (
-    <div className={classes.pagination}>
+    <div className={classes.pagination} data-testid={'pagination'}>
       <ul className={classes.list}>
         <button
           className={classes.item}
@@ -42,6 +42,7 @@ const Pagination = ({
           className={classes.item}
           disabled={page === totalPages}
           onClick={() => handleChangePage('next')}
+          data-testid={'paginationNextBtn'}
         >
           {'>'}
         </button>
