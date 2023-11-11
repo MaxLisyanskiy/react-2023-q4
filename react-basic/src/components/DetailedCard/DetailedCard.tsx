@@ -6,6 +6,7 @@ import Spinner from '../Spinner/Spinner';
 import notFoundItemIMG from '../../assets/detail-not-found.png';
 import classes from './DetailedCard.module.scss';
 import { getDetailedCard } from '../../services/fetchData';
+import DetailedCardItem from './DetailedCardItem';
 
 const DetailedCard = () => {
   const { id } = useParams();
@@ -40,53 +41,43 @@ const DetailedCard = () => {
   };
 
   return (
-    <section className={classes.section}>
+    <section className={classes.section} data-testid={'detailedCard'}>
       <div className={classes.background} onClick={handleRouterBack}></div>
 
-      {isLoading && (
-        <div className={classes.wrapp}>
-          <Spinner />
+      <div
+        className={
+          !character
+            ? `${classes.wrapp} ${classes.wrappActive}`
+            : `${classes.wrapp}`
+        }
+      >
+        <div
+          className={classes.close}
+          onClick={handleRouterBack}
+          id={'closeBtn'}
+          data-testid={'closeBtn'}
+        >
+          {'X'}
         </div>
-      )}
 
-      {!isLoading && (
-        <>
-          {character ? (
-            <div className={classes.item} key={character.id}>
-              <div className={classes.close} onClick={handleRouterBack}>
-                {'X'}
+        {isLoading && <Spinner />}
+        {!isLoading && (
+          <>
+            {character ? (
+              <DetailedCardItem character={character} />
+            ) : (
+              <div>
+                <p className={classes.notFoundText}>Opps... not found</p>
+                <img
+                  className={classes.notFoundImg}
+                  src={notFoundItemIMG}
+                  alt="not-found-pockemon"
+                />
               </div>
-              <div className={classes.itemImg}>
-                <img src={character.images.small} alt={character.name} />
-              </div>
-              <h2 className={classes.itemTitle}>
-                {character.name} <span>HP: {character.hp} </span>
-              </h2>
-              <p className={classes.itemAdditional}>
-                <span>Rarity:</span> {character.rarity}
-              </p>
-              <p className={classes.itemAdditional}>
-                <span>Supertype:</span> {character.supertype}
-              </p>
-              <div className={classes.itemAdditional}>
-                <span>Description:</span> {character.flavorText}
-              </div>
-            </div>
-          ) : (
-            <div className={classes.wrapp}>
-              <div className={classes.close} onClick={handleRouterBack}>
-                {'X'}
-              </div>
-              <p className={classes.notFoundText}>Opps... not found</p>
-              <img
-                className={classes.notFoundImg}
-                src={notFoundItemIMG}
-                alt="not-found-pockemon"
-              />
-            </div>
-          )}
-        </>
-      )}
+            )}
+          </>
+        )}
+      </div>
     </section>
   );
 };
