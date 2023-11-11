@@ -19,7 +19,7 @@ const Search = ({ onChangeSearch }: SearchProps) => {
   const handleSeacrh = () => {
     onChangeSearch();
     changeSearch(value);
-    localStorage.setItem('rss_project_01_search', value);
+    localStorage.setItem('rss_react_basic', value);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,8 +36,11 @@ const Search = ({ onChangeSearch }: SearchProps) => {
           placeholder="Search..."
           value={value}
           onChange={handleChange}
+          data-testid={'searchInput'}
         />
-        <button onClick={handleSeacrh}>Search 🔍</button>
+        <button onClick={handleSeacrh} data-testid={'searchBtn'}>
+          Search 🔍
+        </button>
       </div>
       <ErrorBtn />
     </header>
