@@ -13,14 +13,6 @@ describe('Tests for the Pagination component', () => {
     );
   });
 
-  it('Renders Pagination component correctly', async () => {
-    await waitFor(() => {
-      const pagination = screen.getByTestId('pagination');
-      console.log(pagination);
-      expect(pagination).toBeInTheDocument();
-    });
-  });
-
   it('Updates URL query parameter when page changes', async () => {
     await waitFor(() => {
       const paginationBtn = screen.getByTestId('paginationNextBtn');

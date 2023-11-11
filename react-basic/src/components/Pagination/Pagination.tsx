@@ -28,7 +28,7 @@ const Pagination = ({
   };
 
   return (
-    <div className={classes.pagination} data-testid={'pagination'}>
+    <div className={classes.pagination}>
       <ul className={classes.list}>
         <button
           className={classes.item}

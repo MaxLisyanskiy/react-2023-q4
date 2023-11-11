@@ -2,11 +2,11 @@ import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
 import { BrowserRouter } from 'react-router-dom';
+import { cardTestProps } from '../../test/mock/cardMock';
 import Card from './Card';
-import { cardTestProps } from '../../test/mockDataForTest';
 
-describe('Renders Card correctly', () => {
-  it('Should render the component correctly', () => {
+describe('Tests for the Card component', () => {
+  it('Renders the relevant card data', () => {
     render(
       <BrowserRouter>
         <Card {...cardTestProps} />
