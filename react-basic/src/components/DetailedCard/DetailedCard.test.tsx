@@ -1,9 +1,10 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { act, render, screen, waitFor } from '@testing-library/react';
+import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 import { detailedCardItemProps } from '../../test/mock/detailedCardMock';
 import DetailedCard from './DetailedCard';
 import DetailedCardItem from './DetailedCardItem';
+import userEvent from '@testing-library/user-event';
 
 describe('Tests for the Detailed Card component', () => {
   beforeEach(() => {
@@ -39,6 +40,27 @@ describe('Tests for the Detailed Card component', () => {
       expect(cardImg).toBeInTheDocument();
       expect(cardName).toBeInTheDocument();
       expect(cardDescr).toBeInTheDocument();
+    });
+  });
+
+  it('Hides the component when clicking at the close button', async () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/hgss4-1']}>
+        <Routes>
+          <Route path="/:id" element={<DetailedCard />} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    await act(() => {
+      const user = userEvent.setup();
+      const button = container.querySelector('#closeBtn') as HTMLButtonElement;
+      user.click(button);
+    });
+
+    await waitFor(() => {
+      expect(location.href).not.toContain('hgss4-1');
+      expect(screen.queryByTestId('closeBtn')).not.toBeInTheDocument();
     });
   });
 });

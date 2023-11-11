@@ -1,8 +1,13 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, afterEach, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { generateComponent, testCardsData } from '../../test/mock/cardListMock';
 
 describe('Tests for the Card List component', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.clearAllTimers();
+  });
+
   it('Renders the specified number of cards', async () => {
     render(generateComponent(testCardsData));
 
