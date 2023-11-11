@@ -82,7 +82,7 @@ const CardList = (props: CardListProps) => {
             </>
           ) : (
             <div className={classes.notFound}>
-              <p>Opps... not found</p>
+              <p data-testid={'cardsNotFound'}>Opps... not found</p>
               <img src={notFoundDataIMG} alt="not-found-pockemon" />
             </div>
           )}
