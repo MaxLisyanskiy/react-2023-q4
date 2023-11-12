@@ -13,8 +13,11 @@ export interface CardProps {
 
 const Card = (item: CardProps) => {
   return (
-    <li className={classes.item} data-testid={'cardItem'}>
-      <Link to={generateLink(item.currentPage, item.currentPageSize, item.id)}>
+    <li className={classes.item}>
+      <Link
+        to={generateLink(item.currentPage, item.currentPageSize, item.id)}
+        data-testid={'cardItem'}
+      >
         <div className={classes.imgWrapp}>
           <img className={classes.img} src={item.image} alt={item.name} />
         </div>
