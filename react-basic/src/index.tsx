@@ -1,38 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { RouteObject } from 'react-router-dom';
-import { PROJECT_PATH } from './utils/constants';
-
-import ErrorBoundary from './components/Error/ErrorBoundary';
-import App from './components/App/App';
-import ErrorPage from './pages/ErrorPage/ErrorPage';
-import DetailedCard from './components/DetailedCard/DetailedCard';
-
+import { RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { router } from './utils/router';
 import './styles/index.scss';
+import { setupStore } from './store/store';
 
-export const routes: RouteObject[] = [
-  {
-    path: PROJECT_PATH,
-    element: (
-      <ErrorBoundary>
-        <App />
-      </ErrorBoundary>
-    ),
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: ':id',
-        element: <DetailedCard />,
-      },
-    ],
-  },
-];
-
-const router = createBrowserRouter(routes);
+const store = setupStore();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <RouterProvider router={router} />,
+  </Provider>,
 );

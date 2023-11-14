@@ -7,18 +7,24 @@ import notFoundItemIMG from '../../assets/detail-not-found.png';
 import classes from './DetailedCard.module.scss';
 import { getDetailedCard } from '../../services/fetchData';
 import DetailedCardItem from './DetailedCardItem';
+import { useAppDispatch } from '../../store/redux-hooks';
+import { viewModeSlice } from '../../store/reducers/ViewModeSlice';
 
 const DetailedCard = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
+  const dispatch = useAppDispatch();
+  const { changeViewMode } = viewModeSlice.actions;
+
   const [character, setCharacter] = useState<IDetailedCard | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     getFetchDetailedCard(id || '');
-  }, [id]);
+    dispatch(changeViewMode(true));
+  }, [id]); //eslint-disable-line
 
   const getFetchDetailedCard = async (id: string): Promise<void> => {
     setIsLoading(true);
@@ -38,6 +44,8 @@ const DetailedCard = () => {
     const pageSize = searchParams.get('pageSize') || PAGE_SIZE;
 
     navigate(`${PROJECT_PATH}?page=${page}&pageSize=${pageSize}`);
+
+    dispatch(changeViewMode(false));
   };
 
   return (

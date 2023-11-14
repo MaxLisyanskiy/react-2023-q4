@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { TOTAL_COUNT } from '../../utils/constants';
 import { getAllCards } from '../../services/fetchData';
-import { SearchContext } from '../../context/search-context';
-import { CardsContextType, SearchContextType } from '../../types/context-types';
+import { CardsContextType } from '../../types/context-types';
 import { CardsContext } from '../../context/cards-context';
 import Spinner from '../Spinner/Spinner';
 import Card from '../Card/Card';
 import Pagination from '../Pagination/Pagination';
 import notFoundDataIMG from '../../assets/psyduck.png';
 import classes from './CardList.module.scss';
+import { useAppSelector } from '../../store/redux-hooks';
 
 export interface CardListProps {
   currentPage: number;
@@ -21,7 +21,8 @@ const CardList = (props: CardListProps) => {
   const { currentPage, currentPageSize, onPageChange, onPageSizeChange } =
     props;
 
-  const { search } = useContext(SearchContext) as SearchContextType;
+  const { query } = useAppSelector((state) => state.searchReducer);
+
   const { cards, setCards } = useContext(CardsContext) as CardsContextType;
 
   const [currentTotalCount, setCurrentTotalCount] =
@@ -30,8 +31,8 @@ const CardList = (props: CardListProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    getFetchData(search, currentPage, currentPageSize);
-  }, [search, currentPage, currentPageSize]); // eslint-disable-line
+    getFetchData(query, currentPage, currentPageSize);
+  }, [query, currentPage, currentPageSize]); // eslint-disable-line
 
   const getFetchData = async (
     search: string,

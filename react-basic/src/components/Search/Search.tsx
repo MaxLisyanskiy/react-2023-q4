@@ -1,24 +1,24 @@
-import { ChangeEvent, useContext, useState } from 'react';
-import { SearchContext } from '../../context/search-context';
-import { SearchContextType } from '../../types/context-types';
+import { ChangeEvent, useState } from 'react';
 import ErrorBtn from '../Error/ErrorBtn';
 import logoIMG from '../../assets/logo.png';
 import classes from './Search.module.scss';
+import { useAppDispatch, useAppSelector } from '../../store/redux-hooks';
+import { searchSlice } from '../../store/reducers/SearchSlice';
 
 export interface SearchProps {
   onChangeSearch: () => void;
 }
 
 const Search = ({ onChangeSearch }: SearchProps) => {
-  const { search, changeSearch } = useContext(
-    SearchContext,
-  ) as SearchContextType;
+  const dispatch = useAppDispatch();
+  const { query } = useAppSelector((state) => state.searchReducer);
+  const { changeSearch } = searchSlice.actions;
 
-  const [value, setValue] = useState<string>(search);
+  const [value, setValue] = useState<string>(query);
 
   const handleSeacrh = () => {
     onChangeSearch();
-    changeSearch(value);
+    dispatch(changeSearch(value));
     localStorage.setItem('rss_react_basic', value);
   };
 
