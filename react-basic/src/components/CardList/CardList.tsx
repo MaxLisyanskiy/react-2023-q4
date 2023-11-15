@@ -1,8 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
-import { TOTAL_COUNT } from '../../utils/constants';
-import { getAllCards } from '../../services/fetchData';
-import { CardsContextType } from '../../types/context-types';
-import { CardsContext } from '../../context/cards-context';
+import { pokemonAPI } from '../../services/fetchData';
 import Spinner from '../Spinner/Spinner';
 import Card from '../Card/Card';
 import Pagination from '../Pagination/Pagination';
@@ -23,46 +19,24 @@ const CardList = (props: CardListProps) => {
 
   const { query } = useAppSelector((state) => state.searchReducer);
 
-  const { cards, setCards } = useContext(CardsContext) as CardsContextType;
+  const { data, isLoading, isSuccess } = pokemonAPI.useGetAllCardsQuery({
+    search: query,
+    page: currentPage,
+    pageSize: currentPageSize,
+  });
 
-  const [currentTotalCount, setCurrentTotalCount] =
-    useState<number>(TOTAL_COUNT);
-
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    getFetchData(query, currentPage, currentPageSize);
-  }, [query, currentPage, currentPageSize]); // eslint-disable-line
-
-  const getFetchData = async (
-    search: string,
-    page: number,
-    pageSize: number,
-  ): Promise<void> => {
-    setIsLoading(true);
-
-    getAllCards(page, pageSize, search)
-      .then(({ data, totalCount }) => {
-        setCards(data);
-        setCurrentTotalCount(totalCount);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  const caracters = isSuccess ? data.data : [];
+  const totalCount = isSuccess ? data.totalCount : 0;
 
   return (
     <section className={classes.section}>
       {isLoading && <Spinner />}
       {!isLoading && (
         <>
-          {cards.length > 0 ? (
+          {caracters.length > 0 ? (
             <>
               <ul className={classes.list}>
-                {cards.map((item) => (
+                {caracters.map((item) => (
                   <Card
                     id={item.id}
                     key={item.id}
@@ -76,7 +50,7 @@ const CardList = (props: CardListProps) => {
               <Pagination
                 page={Number(currentPage)}
                 pageSize={Number(currentPageSize)}
-                totalCount={Number(currentTotalCount)}
+                totalCount={Number(totalCount)}
                 onPageChange={onPageChange}
                 onPageSizeChange={onPageSizeChange}
               />

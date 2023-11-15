@@ -2,11 +2,9 @@ import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 
 import Search from '../Search/Search';
 import CardList from '../CardList/CardList';
-import SearchProvider from '../../context/search-context';
 import { useEffect, useState } from 'react';
 import { generateLink } from '../../utils/generate-link';
 import { PAGE, PAGE_SIZE } from '../../utils/constants';
-import CardsProvider from '../../context/cards-context';
 
 const App = () => {
   const navigate = useNavigate();
@@ -45,23 +43,21 @@ const App = () => {
   };
 
   return (
-    <SearchProvider>
-      <CardsProvider>
-        <Search onChangeSearch={handleChangeSearch} />
-        <main className="main">
-          <h1 className="main-title">Welcome to the Pokémon Home</h1>
-          <div className="main-wrapp">
-            <CardList
-              currentPage={currentPage}
-              currentPageSize={currentPageSize}
-              onPageChange={handleChangePage}
-              onPageSizeChange={handleChangePageSize}
-            />
-            <Outlet />
-          </div>
-        </main>
-      </CardsProvider>
-    </SearchProvider>
+    <>
+      <Search onChangeSearch={handleChangeSearch} />
+      <main className="main">
+        <h1 className="main-title">Welcome to the Pokémon Home</h1>
+        <div className="main-wrapp">
+          <CardList
+            currentPage={currentPage}
+            currentPageSize={currentPageSize}
+            onPageChange={handleChangePage}
+            onPageSizeChange={handleChangePageSize}
+          />
+          <Outlet />
+        </div>
+      </main>
+    </>
   );
 };
 

@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
-import { IDetailedCard } from '../../types/card-type';
+import { useEffect } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { PAGE, PAGE_SIZE, PROJECT_PATH } from '../../utils/constants';
 import Spinner from '../Spinner/Spinner';
 import notFoundItemIMG from '../../assets/detail-not-found.png';
 import classes from './DetailedCard.module.scss';
-import { getDetailedCard } from '../../services/fetchData';
+import { pokemonAPI } from '../../services/fetchData';
 import DetailedCardItem from './DetailedCardItem';
 import { useAppDispatch } from '../../store/redux-hooks';
 import { viewModeSlice } from '../../store/reducers/ViewModeSlice';
@@ -18,26 +17,11 @@ const DetailedCard = () => {
   const dispatch = useAppDispatch();
   const { changeViewMode } = viewModeSlice.actions;
 
-  const [character, setCharacter] = useState<IDetailedCard | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
   useEffect(() => {
-    getFetchDetailedCard(id || '');
     dispatch(changeViewMode(true));
   }, [id]); //eslint-disable-line
 
-  const getFetchDetailedCard = async (id: string): Promise<void> => {
-    setIsLoading(true);
-
-    getDetailedCard(id)
-      .then(({ data }) => setCharacter(data))
-      .catch((error) => {
-        console.error('Error:', error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  const { data, isLoading } = pokemonAPI.useGetDetailedCardQuery(id ?? '');
 
   const handleRouterBack = () => {
     const page = searchParams.get('page') || PAGE;
@@ -54,9 +38,7 @@ const DetailedCard = () => {
 
       <div
         className={
-          !character
-            ? `${classes.wrapp} ${classes.wrappActive}`
-            : `${classes.wrapp}`
+          !data ? `${classes.wrapp} ${classes.wrappActive}` : `${classes.wrapp}`
         }
       >
         <div
@@ -71,8 +53,8 @@ const DetailedCard = () => {
         {isLoading && <Spinner />}
         {!isLoading && (
           <>
-            {character ? (
-              <DetailedCardItem character={character} />
+            {data ? (
+              <DetailedCardItem character={data.data} />
             ) : (
               <div>
                 <p className={classes.notFoundText}>Opps... not found</p>
