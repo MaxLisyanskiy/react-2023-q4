@@ -11,8 +11,8 @@ export interface SearchProps {
 
 const Search = ({ onChangeSearch }: SearchProps) => {
   const dispatch = useAppDispatch();
-  const { query } = useAppSelector((state) => state.searchReducer);
   const { changeSearch } = searchSlice.actions;
+  const { query } = useAppSelector((state) => state.searchReducer);
 
   const [value, setValue] = useState<string>(query);
 

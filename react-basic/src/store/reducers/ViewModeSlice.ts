@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { pokemonAPI } from '../../services/fetchData';
 
 interface ViewModeState {
-  mode: boolean;
+  viewItem: boolean;
+  isLoading: boolean;
 }
 
 const initialState: ViewModeState = {
-  mode: false,
+  viewItem: false,
+  isLoading: false,
 };
 
 export const viewModeSlice = createSlice({
@@ -13,8 +16,22 @@ export const viewModeSlice = createSlice({
   initialState,
   reducers: {
     changeViewMode(state, action: PayloadAction<boolean>) {
-      state.mode = action.payload;
+      state.viewItem = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      pokemonAPI.endpoints?.getDetailedCard.matchPending,
+      (state) => {
+        state.isLoading = true;
+      },
+    );
+    builder.addMatcher(
+      pokemonAPI.endpoints?.getDetailedCard.matchFulfilled,
+      (state) => {
+        state.isLoading = false;
+      },
+    );
   },
 });
 

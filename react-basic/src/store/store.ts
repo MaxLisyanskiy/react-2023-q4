@@ -1,11 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { pokemonAPI } from '../services/fetchData';
 import searchReducer from './reducers/SearchSlice';
-import viewModeSlice from './reducers/ViewModeSlice';
+import viewModeReducer from './reducers/ViewModeSlice';
+import pageReducer from './reducers/PageSlice';
 
 const rootReducer = combineReducers({
   searchReducer,
-  viewModeSlice,
+  viewModeReducer,
+  pageReducer,
   [pokemonAPI.reducerPath]: pokemonAPI.reducer,
 });
 

@@ -1,45 +1,48 @@
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 
-import Search from '../Search/Search';
-import CardList from '../CardList/CardList';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { generateLink } from '../../utils/generate-link';
 import { PAGE, PAGE_SIZE } from '../../utils/constants';
+import { useAppDispatch, useAppSelector } from '../../store/redux-hooks';
+import { pageSlice } from '../../store/reducers/PageSlice';
+
+import Search from '../Search/Search';
+import CardList from '../CardList/CardList';
 
 const App = () => {
   const navigate = useNavigate();
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page = searchParams.get('page') ?? String(PAGE);
   const pageSize = searchParams.get('pageSize') ?? String(PAGE_SIZE);
 
-  const [currentPage, setCurrentPage] = useState<number>(Number(page));
-  const [currentPageSize, setCurrentPageSize] = useState<number>(
-    Number(pageSize),
+  const dispatch = useAppDispatch();
+  const { changeCurrentPage, changeCurrentPageSize } = pageSlice.actions;
+
+  const { currentPage, currentPageSize } = useAppSelector(
+    (state) => state.pageReducer,
   );
 
   useEffect(() => {
     setSearchParams({ page, pageSize });
+    dispatch(changeCurrentPage(Number(page)));
+    dispatch(changeCurrentPageSize(Number(pageSize)));
   }, []); // eslint-disable-line
 
   const handleChangeSearch = (): void => {
-    const newUrl = generateLink(currentPage, currentPageSize);
-    navigate(newUrl);
-    setCurrentPage(PAGE);
+    navigate(generateLink(currentPage, currentPageSize));
+    dispatch(changeCurrentPage(PAGE));
   };
 
   const handleChangePage = (page: number): void => {
-    const newUrl = generateLink(page, currentPageSize);
-    navigate(newUrl);
-    setCurrentPage(page);
+    navigate(generateLink(page, currentPageSize));
+    dispatch(changeCurrentPage(page));
   };
 
   const handleChangePageSize = (pageSize: number): void => {
-    const newUrl = generateLink(currentPage, pageSize);
-    navigate(newUrl);
-    setCurrentPageSize(pageSize);
-    setCurrentPage(PAGE);
+    navigate(generateLink(currentPage, pageSize));
+    dispatch(changeCurrentPage(PAGE));
+    dispatch(changeCurrentPageSize(pageSize));
   };
 
   return (

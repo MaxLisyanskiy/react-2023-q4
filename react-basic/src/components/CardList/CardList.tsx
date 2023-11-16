@@ -1,10 +1,12 @@
 import { pokemonAPI } from '../../services/fetchData';
+import { useAppDispatch, useAppSelector } from '../../store/redux-hooks';
+import { pageSlice } from '../../store/reducers/PageSlice';
 import Spinner from '../Spinner/Spinner';
 import Card from '../Card/Card';
 import Pagination from '../Pagination/Pagination';
 import notFoundDataIMG from '../../assets/psyduck.png';
 import classes from './CardList.module.scss';
-import { useAppSelector } from '../../store/redux-hooks';
+import { useEffect, useMemo } from 'react';
 
 export interface CardListProps {
   currentPage: number;
@@ -19,14 +21,24 @@ const CardList = (props: CardListProps) => {
 
   const { query } = useAppSelector((state) => state.searchReducer);
 
+  const dispatch = useAppDispatch();
+  const { changeItems } = pageSlice.actions;
+
   const { data, isLoading, isSuccess } = pokemonAPI.useGetAllCardsQuery({
     search: query,
     page: currentPage,
     pageSize: currentPageSize,
   });
 
-  const caracters = isSuccess ? data.data : [];
+  const caracters = useMemo(
+    () => (isSuccess ? data.data : []),
+    [isSuccess, data],
+  );
   const totalCount = isSuccess ? data.totalCount : 0;
+
+  useEffect(() => {
+    dispatch(changeItems(caracters));
+  }, [caracters]);
 
   return (
     <section className={classes.section}>
