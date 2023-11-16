@@ -37,7 +37,9 @@ const Pagination = ({
         >
           {'<'}
         </button>
-        <li className={classes.item}>{page}</li>
+        <li className={classes.item} data-testid={'paginationPage'}>
+          {page}
+        </li>
         <button
           className={classes.item}
           disabled={page === totalPages}

@@ -1,31 +1,32 @@
-// TODO: change search-context to search in the redux store
+import { screen, fireEvent } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { searchSlice } from '../../store/reducers/SearchSlice';
+import { setupStore } from '../../store/store';
+import { renderWithProviders } from '../../test/testUtils';
+import Search from './Search';
 
-// import { render, screen, fireEvent } from '@testing-library/react';
-// import { describe, expect, it } from 'vitest';
-// import { SearchMock } from '../../test/mock/searchMock';
+describe('Tests for the Search component', () => {
+  it('Saves the entered value to the local storage', async () => {
+    renderWithProviders(<Search onChangeSearch={() => {}} />);
 
-// describe('Tests for the Search component', () => {
-//   it('Saves the entered value to the local storage', async () => {
-//     render(SearchMock(''));
+    const searchInput: HTMLElement = screen.getByTestId('searchInput');
+    const searchBtn: HTMLElement = screen.getByTestId('searchBtn');
 
-//     const searchInput: HTMLElement = screen.getByTestId('searchInput');
-//     const searchBtn: HTMLElement = screen.getByTestId('searchBtn');
+    fireEvent.change(searchInput, { target: { value: 'test' } });
+    fireEvent.click(searchBtn);
 
-//     fireEvent.change(searchInput, { target: { value: 'test' } });
-//     fireEvent.click(searchBtn);
+    const ls = localStorage.getItem('rss_react_basic');
 
-//     const ls = localStorage.getItem('rss_react_basic');
+    expect(ls).toBe('test');
+  });
 
-//     expect(ls).toBe('test');
-//   });
+  it('Saves value and display it when calls dispatch', async () => {
+    const store = setupStore();
+    const { changeSearch } = searchSlice.actions;
+    store.dispatch(changeSearch('test'));
 
-//   it('Check that the component retrieves the value from the local storage upon mounting', async () => {
-//     const ls = localStorage.getItem('rss_react_basic');
-//     expect(ls).toBe('test');
+    renderWithProviders(<Search onChangeSearch={() => {}} />, { store });
 
-//     render(SearchMock(ls || ''));
-
-//     const searchInput = screen.getByTestId('searchInput') as HTMLInputElement;
-//     expect(searchInput.value).toBe(ls);
-//   });
-// });
+    expect(screen.getByTestId('searchInput')).toHaveValue('test');
+  });
+});

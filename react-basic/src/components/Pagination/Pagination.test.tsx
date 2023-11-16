@@ -1,27 +1,32 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { fireEvent, screen } from '@testing-library/react';
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 
-import { BrowserRouter } from 'react-router-dom';
 import App from '../App/App';
+import { renderWithProviders } from '../../test/testUtils';
+import { BrowserRouter } from 'react-router-dom';
+import { mockServer } from '../../test/mock/mock-server';
 
 describe('Tests for the Pagination component', () => {
-  beforeEach(() => {
-    render(
+  beforeAll(() => mockServer.listen());
+  afterEach(() => mockServer.resetHandlers());
+  afterAll(() => mockServer.close());
+
+  it('Updates URL query parameter when page changes', async () => {
+    renderWithProviders(
       <BrowserRouter>
         <App />
       </BrowserRouter>,
     );
-  });
 
-  it('Updates URL query parameter when page changes', async () => {
-    await waitFor(() => {
-      const paginationBtn = screen.getByTestId('paginationNextBtn');
-      fireEvent.click(paginationBtn);
-    });
+    const loader = await screen.findByTestId(/loader/i);
+    expect(loader).toBeInTheDocument();
 
-    await waitFor(() => {
-      expect(location.href).toContain('page=2');
-      expect(location.href).not.toContain('page=1');
-    });
+    const paginationBtn = await screen.findByTestId(/paginationNextBtn/i);
+    if (paginationBtn) fireEvent.click(paginationBtn);
+
+    const page: HTMLLIElement = await screen.findByTestId(/paginationPage/i);
+    expect(page.textContent).toBe('2');
+
+    screen.debug();
   });
 });

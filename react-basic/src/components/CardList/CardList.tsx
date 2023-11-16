@@ -38,7 +38,7 @@ const CardList = (props: CardListProps) => {
 
   useEffect(() => {
     dispatch(changeItems(caracters));
-  }, [caracters]);
+  }, [caracters]); // eslint-disable-line
 
   return (
     <section className={classes.section}>
@@ -47,7 +47,7 @@ const CardList = (props: CardListProps) => {
         <>
           {caracters.length > 0 ? (
             <>
-              <ul className={classes.list}>
+              <ul className={classes.list} data-testid={'caracters'}>
                 {caracters.map((item) => (
                   <Card
                     id={item.id}

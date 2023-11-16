@@ -1,18 +1,19 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
-describe('Renders App correctly', async () => {
+import { renderWithProviders } from '../../test/testUtils';
+
+describe('Renders App correctly', () => {
   it('Should render the component correctly', async () => {
-    render(
+    renderWithProviders(
       <BrowserRouter>
         <App />
       </BrowserRouter>,
     );
-    const h1 = await screen.queryByText('Welcome to the Pokémon Home');
-
+    const h1 = screen.queryByText('Welcome to the Pokémon Home');
     expect(h1).not.toBeNull();
   });
 });
