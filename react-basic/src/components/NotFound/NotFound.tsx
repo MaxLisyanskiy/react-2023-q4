@@ -2,9 +2,9 @@ import { useRouteError, isRouteErrorResponse, Link } from 'react-router-dom';
 import { PAGE, PAGE_SIZE } from '../../utils/constants';
 import { generateLink } from '../../utils/generate-link';
 
-import classes from './ErrorPage.module.scss';
+import classes from './NotFound.module.scss';
 
-const ErrorPage = () => {
+const NotFound = () => {
   const error = useRouteError();
   let errorMessage: string;
 
@@ -33,4 +33,4 @@ const ErrorPage = () => {
   );
 };
 
-export default ErrorPage;
+export default NotFound;

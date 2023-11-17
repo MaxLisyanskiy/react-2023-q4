@@ -26,7 +26,5 @@ describe('Tests for the Pagination component', () => {
 
     const page: HTMLLIElement = await screen.findByTestId(/paginationPage/i);
     expect(page.textContent).toBe('2');
-
-    screen.debug();
   });
 });

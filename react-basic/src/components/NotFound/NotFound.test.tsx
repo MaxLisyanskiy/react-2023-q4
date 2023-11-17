@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import ErrorPage from './ErrorPage';
+import ErrorPage from './NotFound';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
 describe('Tests for the 404 Page component', async () => {

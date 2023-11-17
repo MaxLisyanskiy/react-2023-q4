@@ -20,7 +20,7 @@ export function generateComponent(): JSX.Element {
 
 export const testOneCardDataMock: ICard[] = [
   {
-    id: '1',
+    id: 'hgss4-1',
     name: 'Aargon',
     images: {
       small: 'https://images.pokemontcg.io/hgss4/1.png',

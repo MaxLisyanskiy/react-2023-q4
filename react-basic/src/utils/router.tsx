@@ -2,7 +2,7 @@ import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import { PROJECT_PATH } from './constants';
 import ErrorBoundary from '../components/Error/ErrorBoundary';
 import App from '../components/App/App';
-import ErrorPage from '../pages/ErrorPage/ErrorPage';
+import NotFound from '../components/NotFound/NotFound';
 import DetailedCard from '../components/DetailedCard/DetailedCard';
 
 export const routes: RouteObject[] = [
@@ -13,7 +13,7 @@ export const routes: RouteObject[] = [
         <App />
       </ErrorBoundary>
     ),
-    errorElement: <ErrorPage />,
+    errorElement: <NotFound />,
     children: [
       {
         path: ':id',

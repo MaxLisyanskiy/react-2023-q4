@@ -13,7 +13,11 @@ const ErrorBtn = () => {
   };
 
   return (
-    <button className={classes.throwErrorBtn} onClick={handleThrowError}>
+    <button
+      className={classes.throwErrorBtn}
+      onClick={handleThrowError}
+      data-testid={'errorBtn'}
+    >
       Throw Error?
     </button>
   );

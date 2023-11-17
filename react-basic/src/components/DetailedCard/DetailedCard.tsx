@@ -44,8 +44,7 @@ const DetailedCard = () => {
         <div
           className={classes.close}
           onClick={handleRouterBack}
-          id={'closeBtn'}
-          data-testid={'closeBtn'}
+          data-testid={'closeDetailedBtn'}
         >
           {'X'}
         </div>
