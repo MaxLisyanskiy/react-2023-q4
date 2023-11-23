@@ -1,7 +1,3 @@
-import Link from 'next/link';
-import { PAGE, PAGE_SIZE } from '../../utils/constants';
-import { generateLink } from '../../utils/generate-link';
-
 import classes from './NotFound.module.scss';
 
 const NotFound = () => {
