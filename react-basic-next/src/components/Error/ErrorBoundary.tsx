@@ -1,5 +1,5 @@
+import Image from 'next/image';
 import { Component, ErrorInfo, ReactNode } from 'react';
-import errorIMG from '../../assets/error.webp';
 import classes from './Error.module.scss';
 
 type IErrorBoundaryProps = {
@@ -39,7 +39,13 @@ class ErrorBoundary extends Component<
       return (
         <div className={classes.page}>
           <h1 className={classes.title}>Error... Something went wrong!</h1>
-          <img className={classes.img} src={errorIMG} alt="error" />
+          <Image
+            className={classes.img}
+            src="/error.webp"
+            width={500}
+            height={500}
+            alt="error-boundary-img"
+          />
           <button className={classes.reloadBtn} onClick={this.handleReloadPage}>
             Reload Page
           </button>

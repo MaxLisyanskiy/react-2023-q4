@@ -1,4 +1,5 @@
 // import { Link } from 'react-router-dom';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { generateLink } from '../../utils/generate-link';
@@ -28,7 +29,13 @@ const Card = (item: CardProps) => {
         data-testid={'cardItem'}
       >
         <div className={classes.imgWrapp}>
-          <img className={classes.img} src={item.image} alt={item.name} />
+          <Image
+            // className={classes.img}
+            src={item.image}
+            width={200}
+            height={300}
+            alt={item.name}
+          />
         </div>
         <h4 className={classes.itemTitle}>{item.name}</h4>
       </Link>

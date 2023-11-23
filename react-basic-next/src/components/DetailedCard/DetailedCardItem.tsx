@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { IDetailedCard } from '../../types/card-type';
 import classes from './DetailedCard.module.scss';
 
@@ -5,7 +6,12 @@ const DetailedCardItem = ({ character }: { character: IDetailedCard }) => {
   return (
     <div className={classes.item} key={character.id}>
       <div className={classes.itemImg} data-testid={'detailedCardImg'}>
-        <img src={character.images.small} alt={character.name} />
+        <Image
+          src={character.images.small}
+          width={250}
+          height={350}
+          alt={character.name}
+        />
       </div>
       <h2 className={classes.itemTitle} data-testid={'detailedCardName'}>
         {character.name} <span>HP: {character.hp} </span>

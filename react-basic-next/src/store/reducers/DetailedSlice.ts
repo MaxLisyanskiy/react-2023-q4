@@ -1,9 +1,9 @@
-import { ICard } from '@/types/card-type';
+import { IDetailedCard } from '@/types/card-type';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { pokemonAPI } from '../../services/fetchData';
 
 interface DetailedState {
-  item: ICard | null;
+  item: IDetailedCard | null;
   isLoading: boolean;
 }
 
@@ -16,7 +16,7 @@ export const detailedSlice = createSlice({
   name: 'ViewModeSlice',
   initialState,
   reducers: {
-    setItem(state, action: PayloadAction<ICard>) {
+    setItem(state, action: PayloadAction<IDetailedCard>) {
       state.item = action.payload;
     },
   },

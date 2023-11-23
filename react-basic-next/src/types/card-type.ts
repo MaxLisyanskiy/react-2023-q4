@@ -1,3 +1,5 @@
+import { CardsState } from '@/store/reducers/CardsSlice';
+
 export interface ICard {
   id: string;
   name: string;
@@ -21,4 +23,9 @@ export interface ICardsResponse {
 
 export interface IDetailedCardResponse {
   data: IDetailedCard;
+}
+
+export interface gSSP {
+  cards: CardsState;
+  detailed: IDetailedCard | null;
 }

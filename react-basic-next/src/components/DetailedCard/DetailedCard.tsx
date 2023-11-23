@@ -1,35 +1,19 @@
-import { useEffect } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { PAGE, PAGE_SIZE, PROJECT_PATH } from '../../utils/constants';
-import Spinner from '../Spinner/Spinner';
-import notFoundItemIMG from '../../assets/detail-not-found.png';
 import classes from './DetailedCard.module.scss';
-import { pokemonAPI } from '../../services/fetchData';
 import DetailedCardItem from './DetailedCardItem';
-import { useAppDispatch } from '../../store/redux-hooks';
-import { viewModeSlice } from '../../store/reducers/ViewModeSlice';
+import { IDetailedCard } from '@/types/card-type';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 
-const DetailedCard = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-
-  const dispatch = useAppDispatch();
-  const { changeViewMode } = viewModeSlice.actions;
-
-  useEffect(() => {
-    dispatch(changeViewMode(true));
-  }, [id]); //eslint-disable-line
-
-  const { data, isLoading } = pokemonAPI.useGetDetailedCardQuery(id ?? '');
+const DetailedCard = ({ data }: { data: IDetailedCard | null }) => {
+  const router = useRouter();
+  const { query, pathname } = router;
+  const { detailedId, ...queryWithoutDetailedId } = query;
 
   const handleRouterBack = () => {
-    const page = searchParams.get('page') || PAGE;
-    const pageSize = searchParams.get('pageSize') || PAGE_SIZE;
-
-    navigate(`${PROJECT_PATH}?page=${page}&pageSize=${pageSize}`);
-
-    dispatch(changeViewMode(false));
+    router.push({
+      pathname,
+      query: { ...queryWithoutDetailedId },
+    });
   };
 
   return (
@@ -48,23 +32,19 @@ const DetailedCard = () => {
         >
           {'X'}
         </div>
-
-        {isLoading && <Spinner />}
-        {!isLoading && (
-          <>
-            {data ? (
-              <DetailedCardItem character={data.data} />
-            ) : (
-              <div>
-                <p className={classes.notFoundText}>Opps... not found</p>
-                <img
-                  className={classes.notFoundImg}
-                  src={notFoundItemIMG}
-                  alt="not-found-pockemon"
-                />
-              </div>
-            )}
-          </>
+        {data ? (
+          <DetailedCardItem character={data} />
+        ) : (
+          <div>
+            <p className={classes.notFoundText}>Opps... not found</p>
+            <Image
+              className={classes.notFoundImg}
+              src="/detail-not-found.png"
+              width={100}
+              height={100}
+              alt="not-found-pockemon"
+            />
+          </div>
         )}
       </div>
     </section>

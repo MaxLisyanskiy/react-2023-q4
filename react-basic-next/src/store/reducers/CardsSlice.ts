@@ -3,7 +3,7 @@ import { pokemonAPI } from '../../services/fetchData';
 import { ICard } from '../../types/card-type';
 import { PAGE, PAGE_SIZE } from '../../utils/constants';
 
-interface CardsState {
+export interface CardsState {
   currentPage: number;
   currentPageSize: number;
   isLoading: boolean;

@@ -1,4 +1,3 @@
-import NotFound from '@/components/screens/NotFound/NotFound';
 import { NextPage } from 'next';
 import Head from 'next/head';
 
