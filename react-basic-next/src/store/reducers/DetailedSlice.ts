@@ -20,20 +20,20 @@ export const detailedSlice = createSlice({
       state.item = action.payload;
     },
   },
-  // extraReducers: (builder) => {
-  //   builder.addMatcher(
-  //     pokemonAPI.endpoints?.getDetailedCard.matchPending,
-  //     (state) => {
-  //       state.isLoading = true;
-  //     },
-  //   );
-  //   builder.addMatcher(
-  //     pokemonAPI.endpoints?.getDetailedCard.matchFulfilled,
-  //     (state) => {
-  //       state.isLoading = false;
-  //     },
-  //   );
-  // },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      pokemonAPI.endpoints?.getDetailedCard.matchPending,
+      (state) => {
+        state.isLoading = true;
+      },
+    );
+    builder.addMatcher(
+      pokemonAPI.endpoints?.getDetailedCard.matchFulfilled,
+      (state) => {
+        state.isLoading = false;
+      },
+    );
+  },
 });
 
 export default detailedSlice.reducer;

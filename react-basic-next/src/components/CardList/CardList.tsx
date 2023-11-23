@@ -1,18 +1,14 @@
 import Card from '../Card/Card';
-import Pagination from '../Pagination/Pagination';
 import classes from './CardList.module.scss';
 import { ICard } from '@/types/card-type';
 import Image from 'next/image';
 
 export interface CardListProps {
   data: ICard[];
-  totalCount: number;
-  currentPage: number;
-  currentPageSize: number;
 }
 
 const CardList = (props: CardListProps) => {
-  const { data, totalCount, currentPage, currentPageSize } = props;
+  const { data } = props;
 
   return (
     <section className={classes.section}>
@@ -25,16 +21,9 @@ const CardList = (props: CardListProps) => {
                 key={item.id}
                 name={item.name}
                 image={item.images.small}
-                currentPage={currentPage}
-                currentPageSize={currentPageSize}
               />
             ))}
           </ul>
-          {/* <Pagination
-            page={Number(currentPage)}
-            pageSize={Number(currentPageSize)}
-            totalCount={Number(totalCount)}
-          /> */}
         </>
       ) : (
         <div className={classes.notFound}>

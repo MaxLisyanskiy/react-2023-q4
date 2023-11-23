@@ -1,34 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { pokemonAPI } from '../../services/fetchData';
 import { ICard } from '../../types/card-type';
-import { PAGE, PAGE_SIZE } from '../../utils/constants';
 
 export interface CardsState {
-  currentPage: number;
-  currentPageSize: number;
-  isLoading: boolean;
   items: ICard[];
+  totalCount: number;
+  isLoading: boolean;
 }
 
 const initialState: CardsState = {
-  currentPage: PAGE,
-  currentPageSize: PAGE_SIZE,
-  isLoading: false,
   items: [],
+  totalCount: 0,
+  isLoading: false,
 };
 
 export const cardsReducer = createSlice({
   name: 'CardsReducer',
   initialState,
   reducers: {
-    setCurrentPage(state, action: PayloadAction<number>) {
-      state.currentPage = action.payload;
-    },
-    setCurrentPageSize(state, action: PayloadAction<number>) {
-      state.currentPageSize = action.payload;
-    },
     setItems(state, action: PayloadAction<ICard[]>) {
       state.items = action.payload;
+    },
+    setTotalCount(state, action: PayloadAction<number>) {
+      state.totalCount = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -49,5 +43,4 @@ export const cardsReducer = createSlice({
 
 export default cardsReducer.reducer;
 
-export const { setCurrentPage, setCurrentPageSize, setItems } =
-  cardsReducer.actions;
+export const { setItems, setTotalCount } = cardsReducer.actions;

@@ -5,7 +5,6 @@ interface SearchState {
 }
 
 const initialState: SearchState = {
-  // query: localStorage.getItem('rss_react_basic') ?? '',
   searchQuery: '',
 };
 

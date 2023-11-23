@@ -12,7 +12,6 @@ export interface PaginationProps {
 const Pagination = ({ page, pageSize, totalCount }: PaginationProps) => {
   const router = useRouter();
   const { query } = router;
-
   const totalPages = Math.ceil(+totalCount / +pageSize);
 
   const handleChangePage = (type: 'prev' | 'next') => {
@@ -40,7 +39,7 @@ const Pagination = ({ page, pageSize, totalCount }: PaginationProps) => {
         </li>
         <button
           className={classes.item}
-          disabled={page === totalPages}
+          disabled={totalPages === 0 || page === totalPages}
           onClick={() => handleChangePage('next')}
           data-testid={'paginationNextBtn'}
         >

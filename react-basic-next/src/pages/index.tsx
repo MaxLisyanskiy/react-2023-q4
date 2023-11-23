@@ -7,13 +7,14 @@ import {
   getRunningQueriesThunk,
 } from '@/services/fetchData';
 import { PAGE, PAGE_SIZE } from '@/utils/constants';
+import { useRouter } from 'next/router';
+import { gSSP } from '@/types/card-type';
+
+import ErrorBoundary from '@/components/Error/ErrorBoundary';
 import Search from '@/components/Search/Search';
 import CardList from '@/components/CardList/CardList';
-import DetailedCard from '@/components/DetailedCard/DetailedCard';
-import { useRouter } from 'next/router';
-import ErrorBoundary from '@/components/Error/ErrorBoundary';
-import { gSSP } from '@/types/card-type';
 import Pagination from '@/components/Pagination/Pagination';
+import DetailedCard from '@/components/DetailedCard/DetailedCard';
 
 export const getServerSideProps: GetServerSideProps<{ data: gSSP }> =
   wrapper.getServerSideProps((store) => async (context) => {
@@ -48,7 +49,7 @@ const HomePage = ({
 
   const router = useRouter();
   const { query } = router;
-  const { page, pageSize, search, detailedId } = query;
+  const { page, pageSize, detailedId } = query;
 
   return (
     <>
@@ -61,19 +62,13 @@ const HomePage = ({
           <h1 className="main-title">Welcome to the Pokémon Home</h1>
           <div className="main-wrapp">
             <section>
-              <CardList
-                data={cards.items}
-                totalCount={100}
-                currentPage={cards.currentPage}
-                currentPageSize={cards.currentPageSize}
-              />
+              <CardList data={cards.items} />
               <Pagination
                 page={Number(page)}
                 pageSize={Number(pageSize)}
-                totalCount={Number(100)}
+                totalCount={Number(cards.totalCount)}
               />
             </section>
-
             {detailedId && <DetailedCard data={detailed} />}
           </div>
         </main>

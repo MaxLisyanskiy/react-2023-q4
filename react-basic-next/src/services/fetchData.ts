@@ -6,7 +6,7 @@ import {
   API_DETAILED_CARD_SELECT,
 } from '../utils/constants';
 import { HYDRATE } from 'next-redux-wrapper';
-import { setItems } from '@/store/reducers/CardsSlice';
+import { setItems, setTotalCount } from '@/store/reducers/CardsSlice';
 import { setItem } from '@/store/reducers/DetailedSlice';
 
 interface GetAllCardsParams {
@@ -35,8 +35,9 @@ export const pokemonAPI = createApi({
       }),
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         const mainData = await queryFulfilled;
-        const { data, page, pageSize, totalCount } = mainData.data;
+        const { data, totalCount } = mainData.data;
         dispatch(setItems(data));
+        dispatch(setTotalCount(totalCount));
       },
     }),
     getDetailedCard: builder.query<IDetailedCardResponse, string | string[]>({
