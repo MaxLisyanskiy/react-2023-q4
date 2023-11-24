@@ -5,16 +5,12 @@ import ErrorBtn from '@/components/Error/ErrorBtn';
 import Image from 'next/image';
 import classes from './Search.module.scss';
 
-const Search = () => {
+const Search = ({ searchValue }: { searchValue: string | string[] }) => {
   const router = useRouter();
   const { query } = router;
   const { pageSize, search } = query;
 
-  const [value, setValue] = useState<string>('');
-
-  useEffect(() => {
-    if (search) setValue(`${search}`);
-  }, []); // eslint-disable-line
+  const [value, setValue] = useState<string | string[]>(searchValue);
 
   const handleSeacrh = () => {
     router.push({

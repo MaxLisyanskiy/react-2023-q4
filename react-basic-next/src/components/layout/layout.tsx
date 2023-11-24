@@ -12,12 +12,12 @@ import classes from './layout.module.scss';
 const Layout = ({ cards, detailed }: gSSP) => {
   const router = useRouter();
   const { query } = router;
-  const { page, pageSize, detailed: detailedId } = query;
+  const { page, pageSize, detailed: detailedId, search } = query;
 
   return (
     <>
       <ErrorBoundary>
-        <Search />
+        <Search searchValue={search ?? ''} />
         <main className={classes.main}>
           <h1 className={classes.mainTitle}>Welcome to the Pokémon Home</h1>
           <div className={classes.mainWrapp}>
