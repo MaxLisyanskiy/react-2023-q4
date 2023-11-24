@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 import { PAGE_SIZE } from '@/shared/constants';
 import ErrorBtn from '@/components/Error/ErrorBtn';
@@ -8,7 +8,7 @@ import classes from './Search.module.scss';
 const Search = ({ searchValue }: { searchValue: string | string[] }) => {
   const router = useRouter();
   const { query } = router;
-  const { pageSize, search } = query;
+  const { pageSize } = query;
 
   const [value, setValue] = useState<string | string[]>(searchValue);
 

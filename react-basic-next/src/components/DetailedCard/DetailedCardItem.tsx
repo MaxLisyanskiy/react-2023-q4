@@ -11,6 +11,9 @@ const DetailedCardItem = ({ character }: { character: IDetailedCard }) => {
           width={250}
           height={350}
           alt={character.name}
+          loading="eager"
+          priority={true}
+          style={{ width: '250px', height: '350px' }}
         />
       </div>
       <h2 className={classes.itemTitle} data-testid={'detailedCardName'}>

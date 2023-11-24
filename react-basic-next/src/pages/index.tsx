@@ -1,8 +1,4 @@
-import {
-  GetServerSideProps,
-  InferGetServerSidePropsType,
-  Redirect,
-} from 'next';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { wrapper } from '@/store/store';
 import { getAllCards, getRunningQueriesThunk } from '@/services/fetchData';
 import { PAGE, PAGE_SIZE } from '@/shared/constants';

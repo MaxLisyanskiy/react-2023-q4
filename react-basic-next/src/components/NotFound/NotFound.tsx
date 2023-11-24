@@ -9,7 +9,7 @@ const NotFound = () => {
 
   return (
     <section className={classes.page}>
-      <h1>Oops!</h1>
+      <h1 data-testid={'notFoundTitle'}>Oops! 404</h1>
       <p>Sorry, an unexpected error has occurred.</p>
       <button
         className={classes.button}

@@ -23,7 +23,15 @@ const Card = (item: CardProps) => {
         data-testid={'cardItem'}
       >
         <div className={classes.imgWrapp}>
-          <Image src={item.image} width={200} height={300} alt={item.name} />
+          <Image
+            src={item.image}
+            width={200}
+            height={300}
+            alt={item.name}
+            loading="eager"
+            priority={true}
+            style={{ width: '200px', height: '300px' }}
+          />
         </div>
         <h4 className={classes.itemTitle}>{item.name}</h4>
       </Link>

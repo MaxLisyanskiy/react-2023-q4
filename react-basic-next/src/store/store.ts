@@ -1,8 +1,4 @@
-import {
-  combineReducers,
-  configureStore,
-  PreloadedState,
-} from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { createWrapper } from 'next-redux-wrapper';
 import { pokemonAPI } from '@/services/fetchData';
