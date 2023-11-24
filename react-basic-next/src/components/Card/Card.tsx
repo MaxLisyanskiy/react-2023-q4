@@ -11,14 +11,14 @@ export interface CardProps {
 
 const Card = (item: CardProps) => {
   const router = useRouter();
-  const { pathname, query } = router;
+  const { query } = router;
 
   return (
     <li className={classes.item}>
       <Link
         href={{
-          pathname,
-          query: { ...query, detailedId: `${item.id}` },
+          pathname: `/${item.id}`,
+          query: { ...query },
         }}
         data-testid={'cardItem'}
       >

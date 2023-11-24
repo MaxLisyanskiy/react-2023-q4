@@ -6,13 +6,13 @@ import Image from 'next/image';
 
 const DetailedCard = ({ data }: { data: IDetailedCard | null }) => {
   const router = useRouter();
-  const { query, pathname } = router;
-  const { detailedId, ...queryWithoutDetailedId } = query;
+  const { query } = router;
+  const { detailed, ...otherQuery } = query;
 
   const handleRouterBack = () => {
     router.push({
-      pathname,
-      query: { ...queryWithoutDetailedId },
+      pathname: '/',
+      query: { ...otherQuery },
     });
   };
 
