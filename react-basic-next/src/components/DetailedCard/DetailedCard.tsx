@@ -17,7 +17,6 @@ const DetailedCard = ({ data }: { data: IDetailedCard | null }) => {
         page: page ?? PAGE,
         pageSize: pageSize ?? PAGE_SIZE,
         ...otherQuery,
-        ...otherQuery,
       },
     });
   };
