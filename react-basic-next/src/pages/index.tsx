@@ -1,7 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { wrapper } from '@/store/store';
 import { getAllCards, getRunningQueriesThunk } from '@/services/fetchData';
-import { PAGE, PAGE_SIZE } from '@/utils/constants';
+import { PAGE, PAGE_SIZE } from '@/shared/constants';
 import { gSSP } from '@/types/card-type';
 
 import Head from 'next/head';

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { ChangeEvent } from 'react';
-import { PAGE } from '../../utils/constants';
+import { PAGE } from '../../shared/constants';
 import classes from './Pagination.module.scss';
 
 export interface PaginationProps {

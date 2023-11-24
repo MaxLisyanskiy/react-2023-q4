@@ -4,7 +4,7 @@ import {
   API_URL,
   API_CARD_SELECT,
   API_DETAILED_CARD_SELECT,
-} from '../utils/constants';
+} from '../shared/constants';
 import { HYDRATE } from 'next-redux-wrapper';
 import { setItems, setTotalCount } from '@/store/reducers/CardsSlice';
 import { setItem } from '@/store/reducers/DetailedSlice';

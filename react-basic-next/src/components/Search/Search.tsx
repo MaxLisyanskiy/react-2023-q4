@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { PAGE_SIZE } from '@/utils/constants';
+import { PAGE_SIZE } from '@/shared/constants';
 import ErrorBtn from '@/components/Error/ErrorBtn';
 import Image from 'next/image';
 import classes from './Search.module.scss';

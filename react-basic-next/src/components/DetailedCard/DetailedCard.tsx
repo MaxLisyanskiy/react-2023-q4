@@ -3,16 +3,22 @@ import DetailedCardItem from './DetailedCardItem';
 import { IDetailedCard } from '@/types/card-type';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { PAGE, PAGE_SIZE } from '@/shared/constants';
 
 const DetailedCard = ({ data }: { data: IDetailedCard | null }) => {
   const router = useRouter();
   const { query } = router;
-  const { detailed, ...otherQuery } = query;
+  const { detailed, page, pageSize, ...otherQuery } = query;
 
   const handleRouterBack = () => {
     router.push({
       pathname: '/',
-      query: { ...otherQuery },
+      query: {
+        page: page ?? PAGE,
+        pageSize: pageSize ?? PAGE_SIZE,
+        ...otherQuery,
+        ...otherQuery,
+      },
     });
   };
 

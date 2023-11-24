@@ -12,7 +12,7 @@ import classes from './layout.module.scss';
 const Layout = ({ cards, detailed }: gSSP) => {
   const router = useRouter();
   const { query } = router;
-  const { page, pageSize } = query;
+  const { page, pageSize, detailed: detailedId } = query;
 
   return (
     <>
@@ -29,7 +29,7 @@ const Layout = ({ cards, detailed }: gSSP) => {
                 totalCount={Number(cards.totalCount)}
               />
             </section>
-            {detailed && <DetailedCard data={detailed} />}
+            {detailedId && <DetailedCard data={detailed} />}
           </div>
         </main>
       </ErrorBoundary>
