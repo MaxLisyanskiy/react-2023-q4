@@ -1,10 +1,12 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import mockRouter from 'next-router-mock';
-import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
-
 import NotFoundPage from '@/pages/404';
+
+beforeAll(() => {
+  vi.mock('next/router', () => require('next-router-mock'));
+});
 
 describe('Tests for the 404 Page component', async () => {
   it('Render 404 Page correctly', async () => {
@@ -16,7 +18,7 @@ describe('Tests for the 404 Page component', async () => {
   });
 
   it('Mocks the useRouter hook and back to main page', () => {
-    render(<NotFoundPage />, { wrapper: MemoryRouterProvider });
+    render(<NotFoundPage />);
     expect(screen.getByRole('button')).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button'));

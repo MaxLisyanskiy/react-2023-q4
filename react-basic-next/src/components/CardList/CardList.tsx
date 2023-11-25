@@ -22,7 +22,7 @@ const CardList = (props: CardListProps) => {
       ))}
     </ul>
   ) : (
-    <div className={classes.notFound}>
+    <div className={classes.notFound} data-testid={'cardListEmpty'}>
       <p data-testid={'cardsNotFound'}>Opps... not found</p>
       <Image
         className={classes.notFoundImg}

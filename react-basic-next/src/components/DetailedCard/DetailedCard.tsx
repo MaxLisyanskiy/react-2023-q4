@@ -40,7 +40,7 @@ const DetailedCard = ({ data }: { data: IDetailedCard | null }) => {
         {data ? (
           <DetailedCardItem character={data} />
         ) : (
-          <div>
+          <div data-testid={'detailedCardEmpty'}>
             <p className={classes.notFoundText}>Opps... not found</p>
             <Image
               className={classes.notFoundImg}

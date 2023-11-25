@@ -20,7 +20,6 @@ const Card = (item: CardProps) => {
           pathname: `/${item.id}`,
           query: { ...query },
         }}
-        data-testid={'cardItem'}
       >
         <div className={classes.imgWrapp}>
           <Image
