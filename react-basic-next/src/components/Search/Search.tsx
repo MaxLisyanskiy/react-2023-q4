@@ -5,12 +5,12 @@ import ErrorBtn from '@/components/Error/ErrorBtn';
 import Image from 'next/image';
 import classes from './Search.module.scss';
 
-const Search = ({ searchValue }: { searchValue: string | string[] }) => {
+const Search = () => {
   const router = useRouter();
   const { query } = router;
-  const { pageSize } = query;
+  const { pageSize, search } = query;
 
-  const [value, setValue] = useState<string | string[]>(searchValue);
+  const [value, setValue] = useState<string | string[]>(search ?? '');
 
   const handleSeacrh = () => {
     router.push({
