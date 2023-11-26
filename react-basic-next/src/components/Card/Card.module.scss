@@ -1,0 +1,25 @@
+.item {
+  display: flex;
+  overflow: hidden;
+  background: rgb(60, 62, 68);
+  border-radius: 16px;
+  margin: 6px;
+  color: white;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.itemTitle {
+  text-align: center;
+  padding: 15px 10px;
+  color: #ffd800;
+}
+
+.imgWrapp {
+  max-width: 300px;
+  height: 150px;
+  overflow: hidden;
+}
