@@ -1,9 +1,5 @@
 import '@testing-library/jest-dom';
-import { afterAll, beforeAll, vi } from 'vitest';
-
-beforeAll(() => {
-  // vi.mock('next/router', () => require('next-router-mock'));
-});
+import { afterAll, vi } from 'vitest';
 
 afterAll(() => {
   vi.clearAllMocks();
