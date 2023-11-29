@@ -10,8 +10,6 @@
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "format": "prettier . --check",
     "format:fix": "prettier . --write",
-    "test": "vitest run",
-    "coverage": "vitest run --coverage",
     "deploy": "npm run build && npx gh-pages -d dist -e react-forms",
     "prepare": "cd .. && husky install react-forms/.husky"
   },
