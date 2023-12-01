@@ -1,0 +1,92 @@
+.form {
+  &__wrapp {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 8px;
+  }
+
+  &__passwords {
+    margin: 10px 0 20px;
+  }
+
+  &__submit {
+    position: relative;
+    width: 100%;
+    padding: 8px;
+    color: #fff;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    background: #50b848;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #1f7b18;
+    }
+  }
+}
+
+.input {
+  margin-bottom: 10px;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    margin-bottom: 3px;
+    font-size: 13px;
+    color: #5e5873;
+    cursor: pointer;
+
+    &::after {
+      content: '*';
+      margin-left: 2px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #50b848;
+    }
+  }
+
+  &__input {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1.5px solid #d8d6de;
+  }
+}
+
+.checkbox {
+  margin-bottom: 10px;
+
+  &__content {
+    display: flex;
+  }
+
+  &__label {
+    margin-bottom: 3px;
+    font-size: 13px;
+    color: #5e5873;
+    cursor: pointer;
+
+    &::after {
+      content: '*';
+      margin-left: 2px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #50b848;
+    }
+  }
+
+  &__input {
+    margin-right: 5px;
+    cursor: pointer;
+  }
+}
+
+.select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1.5px solid #d8d6de;
+}
