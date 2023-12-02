@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { UncontrolledForm } from '../components/uncontrolled/uncontrolled-form';
+import { UncontrolledForm } from '../components/form/uncontrolled-form';
 import { PathConstants } from '../utils/router';
 
 export const UncontrolledFormPage = () => {

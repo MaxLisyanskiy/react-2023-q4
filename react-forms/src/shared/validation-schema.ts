@@ -40,17 +40,17 @@ export const validationSchema = object({
     .required('Field "Confirm Password" is required')
     .oneOf([yup.ref('password')], 'Passwords must match!'),
   img: yup
-    .mixed<File>()
+    .mixed<FileList>()
     .test('required', 'Field "Image" is required', (file) => Boolean(file))
-    .test('size', 'The image size should not be more than "300kB"', (file) => {
-      if (!file) return false;
+    .test('size', 'The image size should not be more than "300kB"', (files) => {
+      if (!files || !files[0]) return false;
 
-      return file.size <= 30720;
+      return files[0].size <= 307200;
     })
-    .test('type', 'The image must be in "PNG" or "JPEG" format', (file) => {
-      if (!file) return false;
+    .test('type', 'The image must be in "PNG" or "JPEG" format', (files) => {
+      if (!files || !files[0]) return false;
 
-      return file.type === 'image/jpeg' || file.type === 'image/png';
+      return files[0].type === 'image/jpeg' || files[0].type === 'image/png';
     }),
   country: yup
     .string()

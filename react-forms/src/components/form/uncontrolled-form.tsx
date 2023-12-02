@@ -4,6 +4,7 @@ import { UncontrolledInputs } from '../../shared/uncontrolleds-data';
 import { setNewForm } from '../../store/reducers/formSlice';
 import { useAppDispatch, useAppSelector } from '../../store/redux-hooks';
 import { fileReader } from '../../utils/file-reader';
+import { PathConstants } from '../../utils/router';
 import { validatingForm } from '../../utils/validate-form';
 import { UncontrolledCheckbox } from '../checkbox/uncontrolled-checkbox';
 import { UncontrolledInput } from '../input/uncontrolled-input';
@@ -31,13 +32,13 @@ export const UncontrolledForm = () => {
 
     const formData = {
       name: nameRef.current?.value,
-      age: ageRef.current?.value,
       email: emailRef.current?.value,
+      age: Number(ageRef.current?.value),
+      gender: genderRef.current?.value,
       password: passwordRef.current?.value,
       passwordRepeat: passwordRepeatRef.current?.value,
-      gender: genderRef.current?.value,
-      img: imgRef.current?.files,
       country: countryRef.current?.value,
+      img: imgRef.current?.files,
       t_c: t_cRef.current?.checked,
     };
 
@@ -49,7 +50,7 @@ export const UncontrolledForm = () => {
 
       dispatch(setNewForm({ ...validatedData, img: readerImage }));
       setErrors({});
-      navigate('/');
+      navigate(PathConstants.HOME);
     } else {
       setErrors(errorMessages);
     }
