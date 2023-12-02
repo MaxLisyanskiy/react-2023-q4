@@ -1,10 +1,13 @@
-export const UncontrolledInputs = {
+import { RegisterKeys } from '../types';
+
+export const FormFieldsData = {
   name: {
     name: 'name',
     type: 'text',
     id: 'name',
     label: 'Name',
     placeholder: 'Enter the name',
+    inputKey: RegisterKeys.name,
   },
   age: {
     name: 'age',
@@ -12,6 +15,7 @@ export const UncontrolledInputs = {
     id: 'age',
     label: 'Age',
     placeholder: 'Enter the age',
+    inputKey: RegisterKeys.age,
   },
   email: {
     name: 'email',
@@ -19,19 +23,15 @@ export const UncontrolledInputs = {
     id: 'email',
     label: 'Email',
     placeholder: 'Enter the email',
+    inputKey: RegisterKeys.email,
   },
-  // gender: {
-  //   name: 'gender',
-  //   type: 'text',
-  //   id: 'email',
-  //   label: 'Email',
-  // },
   password: {
     name: 'password',
     type: 'password',
     id: 'password',
     label: 'Password',
     placeholder: 'Create a password',
+    inputKey: RegisterKeys.password,
   },
   passwordRepeat: {
     name: 'passwordRepeat',
@@ -39,6 +39,7 @@ export const UncontrolledInputs = {
     id: 'passwordRepeat',
     label: 'Confirm Password',
     placeholder: 'Enter your password again',
+    inputKey: RegisterKeys.passwordRepeat,
   },
   img: {
     name: 'img',
@@ -46,6 +47,7 @@ export const UncontrolledInputs = {
     id: 'img',
     label: 'Upload image',
     placeholder: '',
+    inputKey: RegisterKeys.img,
   },
   t_c: {
     name: 't_c',
@@ -53,17 +55,22 @@ export const UncontrolledInputs = {
     id: 't_c',
     label: 'Accept T&C',
     placeholder: '',
+    inputKey: RegisterKeys.t_c,
   },
   gender: {
     name: 'gender',
+    type: 'select',
     id: 'gender',
     label: 'Gender',
     placeholder: 'Select the gender',
+    inputKey: RegisterKeys.gender,
   },
   countries: {
     name: 'country',
+    type: 'select',
     id: 'country',
     label: 'Country',
     placeholder: 'Select the country',
+    inputKey: RegisterKeys.country,
   },
 };

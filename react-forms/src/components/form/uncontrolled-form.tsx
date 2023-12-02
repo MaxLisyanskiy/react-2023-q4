@@ -1,8 +1,9 @@
 import { FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UncontrolledInputs } from '../../shared/uncontrolleds-data';
+import { FormFieldsData } from '../../shared/form-fields-data';
 import { setNewForm } from '../../store/reducers/formSlice';
 import { useAppDispatch, useAppSelector } from '../../store/redux-hooks';
+import { FormInputs } from '../../types';
 import { fileReader } from '../../utils/file-reader';
 import { PathConstants } from '../../utils/router';
 import { validatingForm } from '../../utils/validate-form';
@@ -48,7 +49,19 @@ export const UncontrolledForm = () => {
     if (isValidated && validatedData) {
       const readerImage = formData.img ? await fileReader(formData.img[0]) : '';
 
-      dispatch(setNewForm({ ...validatedData, img: readerImage }));
+      const validatedForm: FormInputs = {
+        name: validatedData.name,
+        email: validatedData.email,
+        age: validatedData.age,
+        gender: validatedData.gender,
+        password: validatedData.password,
+        passwordRepeat: validatedData.passwordRepeat,
+        country: validatedData.country,
+        img: readerImage,
+        t_c: validatedData.t_c ?? true,
+      };
+
+      dispatch(setNewForm(validatedForm));
       setErrors({});
       navigate(PathConstants.HOME);
     } else {
@@ -59,24 +72,24 @@ export const UncontrolledForm = () => {
   return (
     <form className="form" onSubmit={handleSubmit}>
       <UncontrolledInput
-        {...UncontrolledInputs.name}
+        {...FormFieldsData.name}
         inputRef={nameRef}
         error={errors['name']}
       />
       <UncontrolledInput
-        {...UncontrolledInputs.email}
+        {...FormFieldsData.email}
         inputRef={emailRef}
         error={errors['email']}
       />
 
       <div className="form__wrapp">
         <UncontrolledInput
-          {...UncontrolledInputs.age}
+          {...FormFieldsData.age}
           inputRef={ageRef}
           error={errors['age']}
         />
         <UncontrolledSelect
-          {...UncontrolledInputs.gender}
+          {...FormFieldsData.gender}
           data={['Male 👦', 'Female 👧']}
           inputRef={genderRef}
           error={errors['gender']}
@@ -85,30 +98,30 @@ export const UncontrolledForm = () => {
 
       <div className="form__passwords">
         <UncontrolledInput
-          {...UncontrolledInputs.password}
+          {...FormFieldsData.password}
           inputRef={passwordRef}
           error={errors['password']}
         />
         <UncontrolledInput
-          {...UncontrolledInputs.passwordRepeat}
+          {...FormFieldsData.passwordRepeat}
           inputRef={passwordRepeatRef}
           error={errors['passwordRepeat']}
         />
       </div>
 
       <UncontrolledSelect
-        {...UncontrolledInputs.countries}
+        {...FormFieldsData.countries}
         data={countries}
         inputRef={countryRef}
         error={errors['country']}
       />
       <UncontrolledInput
-        {...UncontrolledInputs.img}
+        {...FormFieldsData.img}
         inputRef={imgRef}
         error={errors['img']}
       />
       <UncontrolledCheckbox
-        {...UncontrolledInputs.t_c}
+        {...FormFieldsData.t_c}
         inputRef={t_cRef}
         error={errors['t_c']}
       />

@@ -15,6 +15,7 @@ export const validationSchema = object({
     .email('Field "Email" is not valid'),
   age: yup
     .number()
+    .typeError('Field "Age" must be a number')
     .required('Field "Age" is required')
     .integer('Field "Age" must be an integer')
     .positive('Field "Age" must be a positive number'),

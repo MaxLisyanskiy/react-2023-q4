@@ -10,7 +10,7 @@ export const UncontrolledFormPage = () => {
           <span>➜</span>
           <p>Return back</p>
         </Link>
-        <h1>Uncontrolled Form Page</h1>
+        <h1>Uncontrolled Form</h1>
         <UncontrolledForm />
       </div>
     </section>

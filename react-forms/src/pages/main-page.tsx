@@ -2,11 +2,17 @@ import { useAppSelector } from '../store/redux-hooks';
 
 export const MainPage = () => {
   const forms = useAppSelector((state) => state.formReducer.forms);
-  console.log(forms);
+
   return (
     <section>
       <h1>Main Page</h1>
 
+      {forms.length === 0 && (
+        <div className="page__empty">
+          <p>The list is empty...</p>
+          <p>Fill out the uncontrolled or controlled form</p>
+        </div>
+      )}
       <ul className="list">
         {forms.map((item, index) => {
           return (
