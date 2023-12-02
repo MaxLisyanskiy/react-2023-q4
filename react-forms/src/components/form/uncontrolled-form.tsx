@@ -70,7 +70,7 @@ export const UncontrolledForm = () => {
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
+    <form className="form" autoComplete="on" onSubmit={handleSubmit}>
       <UncontrolledInput
         {...FormFieldsData.name}
         inputRef={nameRef}

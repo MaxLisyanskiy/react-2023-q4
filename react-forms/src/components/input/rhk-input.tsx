@@ -17,7 +17,7 @@ export const RHKInput = (props: RHKInputProps) => {
           className={`input__input ${error ? 'error' : ''}`}
           type={type}
           {...min_max}
-          autoComplete={'on'}
+          autoComplete="on"
           id={id}
           placeholder={placeholder}
           {...register(inputKey)}

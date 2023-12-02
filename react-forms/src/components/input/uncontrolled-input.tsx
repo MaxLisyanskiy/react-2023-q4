@@ -25,7 +25,7 @@ export const UncontrolledInput = (props: FormInputProps) => {
           className={`input__input ${error ? 'error' : ''}`}
           type={type}
           name={name}
-          autoComplete={'on'}
+          autoComplete="on"
           id={id}
           ref={inputRef}
           placeholder={placeholder}

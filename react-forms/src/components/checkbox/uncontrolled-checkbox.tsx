@@ -20,7 +20,7 @@ export const UncontrolledCheckbox = (props: FormInputProps) => {
           className="checkbox__input"
           type={type}
           name={name}
-          autoComplete={'on'}
+          autoComplete="on"
           id={id}
           ref={inputRef}
           placeholder={placeholder}

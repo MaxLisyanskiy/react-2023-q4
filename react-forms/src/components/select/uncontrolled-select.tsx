@@ -25,7 +25,7 @@ export const UncontrolledSelect = (props: FormInputProps) => {
           id={id}
           name={name}
           placeholder={placeholder}
-          autoComplete="off"
+          autoComplete="on"
           ref={inputRef}
         />
         <datalist id={`${id}-browsers`}>

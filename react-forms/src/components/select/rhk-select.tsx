@@ -18,7 +18,7 @@ export const RHKSelect = (props: RHKSelectProps) => {
           list={`${id}-browsers`}
           id={id}
           placeholder={placeholder}
-          autoComplete="off"
+          autoComplete="on"
           {...register(inputKey)}
         />
         <datalist id={`${id}-browsers`}>

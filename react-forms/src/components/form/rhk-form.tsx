@@ -45,7 +45,11 @@ export const RHKForm = () => {
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit(onSubmitForm)}>
+    <form
+      className="form"
+      autoComplete="on"
+      onSubmit={handleSubmit(onSubmitForm)}
+    >
       <RHKInput
         {...FormFieldsData.name}
         register={register}
