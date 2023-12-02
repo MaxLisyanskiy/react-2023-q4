@@ -28,7 +28,8 @@
 }
 
 .input {
-  margin-bottom: 10px;
+  position: relative;
+  margin-bottom: 20px;
 
   &__content {
     display: flex;
@@ -36,7 +37,6 @@
   }
 
   &__label {
-    margin-bottom: 3px;
     font-size: 13px;
     color: #5e5873;
     cursor: pointer;
@@ -54,6 +54,21 @@
     padding: 10px 12px;
     border-radius: 6px;
     border: 1.5px solid #d8d6de;
+
+    &.error {
+      border: 1.5px solid #ff2e2e;
+    }
+  }
+
+  &__error {
+    padding-top: 2px;
+    margin: 0;
+    position: absolute;
+    font-size: 13px;
+    color: #ff2e2e;
+    font-style: italic;
+    font-weight: 600;
+    line-height: 1;
   }
 }
 
@@ -65,7 +80,6 @@
   }
 
   &__label {
-    margin-bottom: 3px;
     font-size: 13px;
     color: #5e5873;
     cursor: pointer;

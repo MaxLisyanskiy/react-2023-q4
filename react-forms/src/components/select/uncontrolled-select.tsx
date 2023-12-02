@@ -6,11 +6,12 @@ interface FormInputProps {
   label: string;
   placeholder: string;
   data: string[];
+  error?: string;
   inputRef: RefObject<HTMLInputElement>;
 }
 
 export const UncontrolledSelect = (props: FormInputProps) => {
-  const { name, id, label, placeholder, data, inputRef } = props;
+  const { name, id, label, placeholder, data, error, inputRef } = props;
 
   return (
     <div className="input">
@@ -19,7 +20,7 @@ export const UncontrolledSelect = (props: FormInputProps) => {
           {label}
         </label>
         <input
-          className="input__input"
+          className={`input__input ${error ? 'error' : ''}`}
           list={`${id}-browsers`}
           id={id}
           name={name}
@@ -35,6 +36,7 @@ export const UncontrolledSelect = (props: FormInputProps) => {
           ))}
         </datalist>
       </div>
+      {error && <p className="input__error">{error}</p>}
     </div>
   );
 };

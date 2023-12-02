@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import countriesReducer from './reducers/countriesSlice';
-import uncontrolledFormReducer from './reducers/uncontrolledFormSlice';
+import formReducer from './reducers/formSlice';
 
 const rootReducer = combineReducers({
   countriesReducer,
-  uncontrolledFormReducer,
+  formReducer,
 });
 
 export const setupStore = () => {

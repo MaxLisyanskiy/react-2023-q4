@@ -6,11 +6,12 @@ interface FormInputProps {
   id: string;
   label: string;
   placeholder: string;
+  error?: string;
   inputRef: RefObject<HTMLInputElement>;
 }
 
 export const UncontrolledCheckbox = (props: FormInputProps) => {
-  const { name, type, id, label, placeholder, inputRef } = props;
+  const { name, type, id, label, placeholder, error, inputRef } = props;
 
   return (
     <div className="checkbox">
@@ -29,7 +30,7 @@ export const UncontrolledCheckbox = (props: FormInputProps) => {
           {label}
         </label>
       </div>
-      {/* {errorMessage && <p className="error-message">{errorMessage}</p>} */}
+      {error && <p className="input__error">{error}</p>}
     </div>
   );
 };

@@ -6,20 +6,12 @@ interface FormInputProps {
   id: string;
   label: string;
   placeholder: string;
+  error?: string;
   inputRef: RefObject<HTMLInputElement>;
 }
 
 export const UncontrolledInput = (props: FormInputProps) => {
-  const { name, type, id, label, placeholder, inputRef } = props;
-
-  const onShowPassword = () => {
-    const input = inputRef.current;
-    if (input) {
-      input.type === 'password'
-        ? (input.type = 'text')
-        : (input.type = 'password');
-    }
-  };
+  const { name, type, id, label, placeholder, error, inputRef } = props;
 
   return (
     <div className="input">
@@ -30,7 +22,7 @@ export const UncontrolledInput = (props: FormInputProps) => {
           </label>
         )}
         <input
-          className="input__input"
+          className={`input__input ${error ? 'error' : ''}`}
           type={type}
           name={name}
           autoComplete={'on'}
@@ -38,16 +30,13 @@ export const UncontrolledInput = (props: FormInputProps) => {
           ref={inputRef}
           placeholder={placeholder}
         />
-        {['password', 'confirmPassword'].includes(name) && (
-          <div onClick={onShowPassword} />
-        )}
         {type === 'checkbox' && (
           <label className="input__label" htmlFor={id}>
             {label}
           </label>
         )}
       </div>
-      {/* {errorMessage && <p className="error-message">{errorMessage}</p>} */}
+      {error && <p className="input__error">{error}</p>}
     </div>
   );
 };
