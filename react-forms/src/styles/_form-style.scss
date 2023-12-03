@@ -1,0 +1,132 @@
+.form {
+  &__wrapp {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 8px;
+  }
+
+  &__passwords {
+    margin: 10px 0 20px;
+  }
+
+  &__submit {
+    position: relative;
+    width: 100%;
+    padding: 8px;
+    color: #fff;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    background: #50b848;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #1f7b18;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+}
+
+.input {
+  position: relative;
+  margin-bottom: 20px;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    font-size: 13px;
+    color: #5e5873;
+    cursor: pointer;
+
+    &::after {
+      content: '*';
+      margin-left: 2px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #50b848;
+    }
+  }
+
+  &__input {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1.5px solid #d8d6de;
+
+    &.error {
+      border: 1.5px solid #ff2e2e;
+    }
+  }
+
+  &__wrapp-password {
+    display: flex;
+  }
+
+  &__password {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px 0px 0px 6px;
+    border: 1.5px solid #d8d6de;
+
+    &.error {
+      border: 1.5px solid #ff2e2e;
+    }
+  }
+
+  &__show-password {
+    padding: 10px 12px;
+    border-radius: 0px 6px 6px 0px;
+    background: #d8d6de;
+    cursor: pointer;
+  }
+
+  &__error {
+    padding-top: 2px;
+    margin: 0;
+    position: absolute;
+    font-size: 13px;
+    color: #ff2e2e;
+    font-style: italic;
+    font-weight: 600;
+    line-height: 1;
+  }
+}
+
+.checkbox {
+  margin-bottom: 10px;
+
+  &__content {
+    display: flex;
+  }
+
+  &__label {
+    font-size: 13px;
+    color: #5e5873;
+    cursor: pointer;
+
+    &::after {
+      content: '*';
+      margin-left: 2px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #50b848;
+    }
+  }
+
+  &__input {
+    margin-right: 5px;
+    cursor: pointer;
+  }
+}
+
+.select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1.5px solid #d8d6de;
+}

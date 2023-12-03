@@ -1,0 +1,37 @@
+@import './page.scss';
+@import './form-style.scss';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  background: #eff1f4;
+  color: #24272e;
+}
+
+#root {
+  padding: 12px;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  margin: 0;
+}
+
+.main {
+  margin: 0 auto;
+  max-width: 1920px;
+  padding: 20px;
+}
+
+h1 {
+  margin: 0;
+}
