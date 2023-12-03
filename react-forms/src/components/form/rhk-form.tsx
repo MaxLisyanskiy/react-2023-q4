@@ -11,11 +11,15 @@ import { AppFields, FormInputs } from '../../types';
 import { fileReader } from '../../utils/file-reader';
 import { setNewForm } from '../../store/reducers/formSlice';
 import { PathConstants } from '../../utils/router';
+import { RHKPassword } from '../password/rhk-password';
+import { useState } from 'react';
 
 export const RHKForm = () => {
   const navigate = useNavigate();
   const { countries } = useAppSelector((state) => state.countriesReducer);
   const dispatch = useAppDispatch();
+
+  const [passwordType, setPasswordType] = useState<string>('password');
 
   const {
     register,
@@ -76,14 +80,20 @@ export const RHKForm = () => {
       </div>
 
       <div className="form__passwords">
-        <RHKInput
-          {...FormFieldsData.password}
+        <RHKPassword
+          {...{ ...FormFieldsData.password, type: passwordType }}
           register={register}
+          onChange={() =>
+            setPasswordType(passwordType === 'password' ? 'string' : 'password')
+          }
           error={errors.password}
         />
-        <RHKInput
-          {...FormFieldsData.passwordRepeat}
+        <RHKPassword
+          {...{ ...FormFieldsData.passwordRepeat, type: passwordType }}
           register={register}
+          onChange={() =>
+            setPasswordType(passwordType === 'password' ? 'string' : 'password')
+          }
           error={errors.passwordRepeat}
         />
       </div>

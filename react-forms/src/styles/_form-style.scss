@@ -64,6 +64,28 @@
     }
   }
 
+  &__wrapp-password {
+    display: flex;
+  }
+
+  &__password {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px 0px 0px 6px;
+    border: 1.5px solid #d8d6de;
+
+    &.error {
+      border: 1.5px solid #ff2e2e;
+    }
+  }
+
+  &__show-password {
+    padding: 10px 12px;
+    border-radius: 0px 6px 6px 0px;
+    background: #d8d6de;
+    cursor: pointer;
+  }
+
   &__error {
     padding-top: 2px;
     margin: 0;

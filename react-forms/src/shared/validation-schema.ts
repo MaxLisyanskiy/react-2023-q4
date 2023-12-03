@@ -4,15 +4,21 @@ import { setupStore } from '../store/store';
 
 const countries = setupStore().getState().countriesReducer.countries;
 
+const EMAIL_REGX =
+  /^(([^<>()\[\]\\.,;:\s@"]+(.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/;
+
 export const validationSchema = object({
   name: yup
     .string()
     .required('Field "Name" is required')
-    .uppercase('Field "Name" must begin with an uppercase letter'),
+    .matches(
+      /^(?=.*[A-ZА-Я])/,
+      'Field "Name" must begin with an uppercase letter',
+    ),
   email: yup
     .string()
     .required('Field "Email" is required')
-    .email('Field "Email" is not valid'),
+    .matches(EMAIL_REGX, 'Field "Email" is invalid email address'),
   age: yup
     .number()
     .typeError('Field "Age" must be a number')
@@ -22,7 +28,7 @@ export const validationSchema = object({
   gender: yup
     .string()
     .required('Field "Gender" is required')
-    .test('includes in list', "Country doesn't exist", (text) => {
+    .test('includes in list', "Gender doesn't exist", (text) => {
       const allGenres = ['male 👦', 'female 👧'];
       return allGenres.includes(text.toLowerCase());
     }),
@@ -35,8 +41,7 @@ export const validationSchema = object({
     .matches(
       /^(?=.*[!@#%&$^*()?><|+=])/,
       'Password must contain one Special character',
-    )
-    .min(8, 'Password Strength: weak. Must contain 8 characters'),
+    ),
   passwordRepeat: yup
     .string()
     .required('Field "Confirm Password" is required')

@@ -9,6 +9,7 @@ import { PathConstants } from '../../utils/router';
 import { validatingForm } from '../../utils/validate-form';
 import { UncontrolledCheckbox } from '../checkbox/uncontrolled-checkbox';
 import { UncontrolledInput } from '../input/uncontrolled-input';
+import { UncontrolledPassword } from '../password/uncontrolled-password';
 import { UncontrolledSelect } from '../select/uncontrolled-select';
 
 export const UncontrolledForm = () => {
@@ -27,6 +28,8 @@ export const UncontrolledForm = () => {
   const t_cRef = useRef<HTMLInputElement>(null);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const [passwordType, setPasswordType] = useState<string>('password');
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -97,14 +100,20 @@ export const UncontrolledForm = () => {
       </div>
 
       <div className="form__passwords">
-        <UncontrolledInput
-          {...FormFieldsData.password}
+        <UncontrolledPassword
+          {...{ ...FormFieldsData.password, type: passwordType }}
           inputRef={passwordRef}
+          onChange={() =>
+            setPasswordType(passwordType === 'password' ? 'string' : 'password')
+          }
           error={errors['password']}
         />
-        <UncontrolledInput
-          {...FormFieldsData.passwordRepeat}
+        <UncontrolledPassword
+          {...{ ...FormFieldsData.passwordRepeat, type: passwordType }}
           inputRef={passwordRepeatRef}
+          onChange={() =>
+            setPasswordType(passwordType === 'password' ? 'string' : 'password')
+          }
           error={errors['passwordRepeat']}
         />
       </div>
