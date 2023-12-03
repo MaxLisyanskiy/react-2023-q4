@@ -19,23 +19,24 @@ export const validationSchema = object({
     .required('Field "Age" is required')
     .integer('Field "Age" must be an integer')
     .positive('Field "Age" must be a positive number'),
-  gender: yup.string().required('Field "Gender" is required'),
+  gender: yup
+    .string()
+    .required('Field "Gender" is required')
+    .test('includes in list', "Country doesn't exist", (text) => {
+      const allGenres = ['male 👦', 'female 👧'];
+      return allGenres.includes(text.toLowerCase());
+    }),
   password: yup
     .string()
     .required('Field "Password" is required')
-    .matches(
-      /^(?=.*[a-zа-я])/,
-      'Password must contain at least one lowercase letter',
-    )
-    .matches(
-      /^(?=.*[A-ZА-Я])/,
-      'Password must contain at least one uppercase letter',
-    )
-    .matches(/^(?=.*[0-9])/, 'Password must contain at least one number')
+    .matches(/^(?=.*[a-zа-я])/, 'Password must contain one Lowercase letter')
+    .matches(/^(?=.*[A-ZА-Я])/, 'Password must contain one Uppercase letter')
+    .matches(/^(?=.*[0-9])/, 'Password must contain one Number')
     .matches(
       /^(?=.*[!@#%&$^*()?><|+=])/,
-      'Password must contain at least one special character',
-    ),
+      'Password must contain one Special character',
+    )
+    .min(8, 'Password Strength: weak. Must contain 8 characters'),
   passwordRepeat: yup
     .string()
     .required('Field "Confirm Password" is required')
