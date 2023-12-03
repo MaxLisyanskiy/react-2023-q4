@@ -24,6 +24,10 @@
     &:hover {
       background: #1f7b18;
     }
+
+    &:disabled {
+      opacity: 0.5;
+    }
   }
 }
 

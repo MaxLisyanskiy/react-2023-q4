@@ -20,7 +20,7 @@ export const RHKForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: 'onChange',
     resolver: yupResolver(validationSchema),
@@ -105,7 +105,7 @@ export const RHKForm = () => {
         error={errors['t_c']}
       />
 
-      <button type="submit" className="form__submit">
+      <button type="submit" className="form__submit" disabled={!isValid}>
         Submit
       </button>
     </form>
