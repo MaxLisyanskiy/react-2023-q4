@@ -8,8 +8,8 @@
     "build": "tsc && vite build",
     "lint": "eslint .",
     "format:fix": "prettier . --write",
-    "deploy": "npm run build && npx gh-pages -d dist -e react-basic",
-    "prepare": "cd .. && husky install react-basic/.husky"
+    "deploy": "npm run build && npx gh-pages -d dist -e react-basic-with-classes",
+    "prepare": "cd .. && husky install react-basic-with-classes/.husky"
   },
   "dependencies": {
     "react": "^18.2.0",
