@@ -1,29 +1,22 @@
-import { Component } from 'react';
-import { IErrorBtnProps, IErrorBtnState } from '../../types/error';
+import { useEffect, useState } from 'react';
 import './Error.css';
 
-class ErrorBtn extends Component<IErrorBtnProps, IErrorBtnState> {
-  public state: IErrorBtnState = {
-    error: false,
+const ErrorBtn = () => {
+  const [error, setError] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (error) throw new Error('Throw an Error example!');
+  }, [error]);
+
+  const handleThrowError = () => {
+    setError(true);
   };
 
-  public componentDidUpdate(_: IErrorBtnProps, prevState: IErrorBtnState): void {
-    if (this.state.error !== prevState.error) {
-      throw new Error('Throw an Error example!');
-    }
-  }
-
-  private handleThrowError = (): void => {
-    this.setState({ error: true });
-  };
-
-  public render() {
-    return (
-      <button className="error_btn" onClick={this.handleThrowError}>
-        Throw Error?
-      </button>
-    );
-  }
-}
+  return (
+    <button className="error_btn" onClick={handleThrowError}>
+      Throw Error?
+    </button>
+  );
+};
 
 export default ErrorBtn;

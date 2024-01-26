@@ -1,9 +1,19 @@
-import { Component, ErrorInfo } from 'react';
-import { IErrorBoundaryProps, IErrorBoundaryState } from '../../types/error';
+import { Component, ErrorInfo, ReactNode } from 'react';
 import errorIMG from '../../assets/error.jpg';
 import './Error.css';
 
-class ErrorBoundary extends Component<IErrorBoundaryProps, IErrorBoundaryState> {
+type IErrorBoundaryProps = {
+  children?: ReactNode;
+};
+
+type IErrorBoundaryState = {
+  hasError: boolean;
+};
+
+class ErrorBoundary extends Component<
+  IErrorBoundaryProps,
+  IErrorBoundaryState
+> {
   public state: IErrorBoundaryState = {
     hasError: false,
   };
@@ -12,7 +22,10 @@ class ErrorBoundary extends Component<IErrorBoundaryProps, IErrorBoundaryState> 
     return { hasError: true };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo): IErrorBoundaryState {
+  public componentDidCatch(
+    error: Error,
+    errorInfo: ErrorInfo,
+  ): IErrorBoundaryState {
     console.error('Uncaught error:', error, errorInfo);
     return { hasError: true };
   }

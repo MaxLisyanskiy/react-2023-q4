@@ -1,98 +1,147 @@
-import { Component } from 'react';
-import { ICharacterProps, ICharacterResponse, ICharacterState } from '../../types/characters';
-import notFoundIMG from '../../assets/not-found.webp';
-import './Characters.css';
+import { useEffect, useState } from 'react';
+import { ICharacter, ICharacterResponse } from '../../types/characters';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import Pagination from '../Pagination/Pagination';
+import { generateLink } from '../../utils/generate-link';
+import { API_URL, PAGE, PAGE_SIZE, TOTAL_COUNT } from '../../constants';
+import './Characters.scss';
 
-const API_URL: string = 'https://rickandmortyapi.com/api/character';
+const Characters = ({ search }: { search: string }) => {
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-class Characters extends Component<ICharacterProps, ICharacterState> {
-  state: ICharacterState = {
-    characters: [],
-    loading: false,
-  };
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(PAGE);
+  const [currentPageSize, setCurrentPageSize] = useState<number>(PAGE_SIZE);
+  const [currentTotalCount, setCurrentTotalCount] =
+    useState<number>(TOTAL_COUNT);
 
-  constructor(props: ICharacterProps) {
-    super(props);
-  }
+  const [characters, setCharacters] = useState<ICharacter[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  componentDidUpdate(prevProps: ICharacterProps): void {
-    if (this.props.searchValue !== prevProps.searchValue) {
-      this.getData(this.props.searchValue);
+  useEffect(() => {
+    const search = searchParams.get('search') ?? '';
+    const page = searchParams.get('page') ?? String(PAGE);
+    const pageSize = searchParams.get('pageSize') ?? String(PAGE_SIZE);
+
+    if (search !== searchValue) {
+      setSearchValue(search);
     }
-  }
 
-  componentDidMount(): void {
-    this.getData(this.props.searchValue);
-  }
+    if (+page !== currentPage) {
+      setCurrentPage(+page);
+    }
 
-  getData = async (searchValue: string): Promise<void> => {
-    this.setState({ loading: true });
+    if (+pageSize !== currentPageSize) {
+      setCurrentPageSize(+pageSize);
+    }
+
+    if (search) {
+      setSearchParams({ search, page, pageSize });
+    } else {
+      setSearchParams({ page, pageSize });
+    }
+
+    getFetchCharacters(search, +page, +pageSize);
+  }, []); // eslint-disable-line
+
+  useEffect(() => {
+    if (search !== searchValue) {
+      setSearchValue(search);
+      getFetchCharacters(search, currentPage, currentPageSize);
+    }
+  }, [search]); // eslint-disable-line
+
+  const getFetchCharacters = async (
+    search: string,
+    page: number,
+    pageSize: number,
+  ): Promise<void> => {
+    setIsLoading(true);
 
     try {
-      const response: Response = await fetch(searchValue.trim() !== '' ? `${API_URL}?name=${searchValue}` : API_URL);
+      const response: Response = await fetch(
+        search.trim() !== ''
+          ? `${API_URL}?q=name:${search}&page=${page}&pageSize=${pageSize}`
+          : `${API_URL}?page=${page}&pageSize=${pageSize}`,
+      );
 
       if (response.status === 200) {
-        const data: ICharacterResponse = await response.json();
-        this.setState({ characters: data.results });
+        const { data, page, pageSize, totalCount }: ICharacterResponse =
+          await response.json();
+
+        setCurrentPage(page);
+        setCurrentPageSize(pageSize);
+        setCurrentTotalCount(totalCount);
+        setCharacters(data);
       } else {
-        this.setState({ characters: [] });
+        setCharacters([]);
       }
     } catch (error) {
-      this.setState({ characters: [] });
+      setCharacters([]);
       console.error('Error:', error);
     } finally {
-      this.setState({ loading: false });
+      setIsLoading(false);
     }
   };
 
-  render() {
-    return (
-      <main className="characters">
-        <h1 className="characters__title">The Rick and Morty Characters</h1>
+  const handleChangePagination = (
+    pageNumber: number,
+    pageSizeValue: number,
+  ) => {
+    setCurrentPage(pageNumber);
+    setCurrentPageSize(pageSizeValue);
+    navigate(generateLink(pageNumber, pageSizeValue, searchValue));
+    getFetchCharacters(searchValue, pageNumber, pageSizeValue);
+  };
 
-        <section className="characters__section">
-          {this.state.loading ? (
-            <div className="characters__loading">Loading...</div>
-          ) : (
-            <>
-              {this.state.characters.length > 0 ? (
-                <ul className="list">
-                  {this.state.characters.map((item) => {
-                    return (
-                      <li className="item" key={item.id}>
+  return (
+    <section className="characters">
+      <div className="characters__section">
+        {isLoading ? (
+          <div className="characters__loading">Loading...</div>
+        ) : (
+          <>
+            {characters.length > 0 ? (
+              <ul className="list">
+                {characters.map((item) => {
+                  return (
+                    <li className="item" key={item.id}>
+                      <Link
+                        to={generateLink(
+                          currentPage,
+                          currentPageSize,
+                          searchValue,
+                          item.id,
+                        )}
+                      >
                         <div>
-                          <img src={item.image} alt={item.name} />
+                          <img src={item.images.small} alt={item.name} />
                         </div>
-                        <div className="item__wrapp">
-                          <h2 className="item__title">{item.name}</h2>
-                          <h4 className="item__subtitle">
-                            {item.species} - {item.gender}
-                          </h4>
-                          <div className="item__additional">
-                            <span>Last known location:</span>
-                            <p>{item.location.name}</p>
-                          </div>
-                          <div className="item__additional">
-                            <span>First seen in:</span>
-                            <p>{item.origin.name}</p>
-                          </div>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              ) : (
-                <div className="characters__not-found">
-                  <p>Opps... not found</p>
-                  <img src={notFoundIMG} alt="notFoundIMG" />
-                </div>
-              )}
-            </>
-          )}
-        </section>
-      </main>
-    );
-  }
-}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <div className="characters__not-found">
+                <p>Opps... not found</p>
+              </div>
+            )}
+          </>
+        )}
+        <Pagination
+          page={Number(currentPage)}
+          pageSize={Number(currentPageSize)}
+          totalCount={Number(currentTotalCount)}
+          changePagination={(pageNumber, pageSizeValue) =>
+            handleChangePagination(pageNumber, pageSizeValue)
+          }
+        />
+      </div>
+    </section>
+  );
+};
 
 export default Characters;
